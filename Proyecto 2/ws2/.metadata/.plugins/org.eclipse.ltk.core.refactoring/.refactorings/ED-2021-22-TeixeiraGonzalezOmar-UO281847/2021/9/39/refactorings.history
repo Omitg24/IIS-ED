@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;p2Grafos.Graph.existEdge(...)&apos; to &apos;existsEdge&apos;&#x0D;&#x0A;- Original project: &apos;ED-2021-22-TeixeiraGonzalezOmar-UO281847&apos;&#x0D;&#x0A;- Original element: &apos;p2Grafos.Graph.existEdge(...)&apos;&#x0D;&#x0A;- Renamed element: &apos;p2Grafos.Graph.existsEdge(...)&apos;&#x0D;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;existEdge&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;p2Grafos{Graph.java[Graph~existEdge~QT;~QT;" name="existsEdge" references="true" stamp="1632733081727" version="1.0"/>
+</session>

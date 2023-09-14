@@ -1,0 +1,75 @@
+Arbol:1
+100:BF=0
+
+Arbol:2
+100:BF=-1
+	90:BF=0
+
+Arbol:3 testSesion9 -> addNode(80).singleLeftRotation[-2][-1]
+	100:BF=0
+90:BF=0
+	80:BF=0
+
+Arbol:4
+	100:BF=0
+90:BF=-1
+	80:BF=-1
+		70:BF=0
+
+Arbol:5 testSesion9 -> addNode(60).singleLeftRotation[-2][-1]
+	100:BF=0
+90:BF=-1
+		80:BF=0
+	70:BF=0
+		60:BF=0
+
+Arbol:6 testSesion9 -> addNode(50).singleLeftRotation[-2][-1]
+		100:BF=0
+	90:BF=0
+		80:BF=0
+70:BF=0
+	60:BF=-1
+		50:BF=0
+
+Arbol:7 testSesion9 -> addNode(40).singleLeftRotation[-2][-1]
+		100:BF=0
+	90:BF=0
+		80:BF=0
+70:BF=0
+		60:BF=0
+	50:BF=0
+		40:BF=0
+
+Arbol:8
+		100:BF=0
+	90:BF=0
+		80:BF=0
+70:BF=-1
+		60:BF=0
+	50:BF=-1
+		40:BF=-1
+			30:BF=0
+
+Arbol:9 testSesion9 -> addNode(20).singleLeftRotation[-2][-1]
+		100:BF=0
+	90:BF=0
+		80:BF=0
+70:BF=-1
+		60:BF=0
+	50:BF=-1
+			40:BF=0
+		30:BF=0
+			20:BF=0
+
+Arbol:10 testSesion9 -> addNode(10).singleLeftRotation[-2][-1]
+		100:BF=0
+	90:BF=0
+		80:BF=0
+70:BF=-1
+			60:BF=0
+		50:BF=0
+			40:BF=0
+	30:BF=0
+		20:BF=-1
+			10:BF=0
+

@@ -1,0 +1,371 @@
+package p1Algoritmia;
+
+import java.security.InvalidParameterException;
+/**
+ * Titulo: Clase Algorithms
+ * 
+ * @author Omar Teixeira
+ * @version 18/09/2021
+ */
+public class Algorithms {
+	/**
+	 * Constante Sleep Time
+	 */
+	private static final long SLEEP_TIME = 1;
+	
+	/**
+	 * Método doNothing
+	 */
+	public static void doNothing() {
+		try {
+			Thread.sleep(SLEEP_TIME);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Método que calcula el factorial de un numero mayor o igual a cero de forma recursiva
+	 * 
+	 * @param n, numero a calcular el factorial
+	 * @return factorial
+	 */
+	public long factorial (int n) { // Calcula el factorial de n>=0 de forma recursiva
+		doNothing();
+		if (n<0)
+			throw new InvalidParameterException("No permitidos parámetros negativos como "+ n);		
+		
+		if (n==0)
+			return 1;
+		else
+			return n*factorial(n-1);		
+	} 
+	
+	/**
+	 * Método que calcula el numero que ocupa el n introducido en la sucesión de fibonacci
+	 * 
+	 * @param n, numero a calcular el fibonacci
+	 * @return valor fibonacci
+	 */
+	public int fibonacci (int n) { // Calcula el termino n-esimo teniendo en cuenta que el primer término se considera fib(0)=0; y fib(1)=1		
+		doNothing();
+		if (n<0)
+		throw new InvalidParameterException("No permitidos parámetros negativos como "+ n); 
+		
+		if (n==0)
+			return 0;
+		else if (n==1)
+			return 1;
+		else
+			return fibonacci(n-1)+fibonacci(n-2);		
+	} 
+	
+	/**
+	 * Método que calcula la potencia recursiva 1 de 2 elevado al numero introducido n
+	 * 
+	 * @param n, numero al que elevar el 2
+	 * @return potencia de 2 elevado a n
+	 */
+	public long pow2Rec1(int n) {  // calcula 2 elevado a n de forma recursiva 2^n = 2*2^(n-1)
+		doNothing();
+		if (n<0) 
+			throw new InvalidParameterException("No permitidos parámetros negativos como "+ n);
+		
+		if (n==0)
+			return 1;
+		else 
+			return 2*pow2Rec1(n-1);				
+	} 
+	
+	/**
+	 * Método que calcula la potencia iterativa de 2 elevado al numero introducido n
+	 * 
+	 * @param n, numero al que elevar el 2
+	 * @return potencia de 2 elevado a n
+	 */
+	public long pow2Iter (int n) {  // calcula 2 elevado a n de forma iterativa 
+	    if (n<0)
+	    	throw new InvalidParameterException("No permitidos exponentes negativos como "+ n); 
+	    
+	    long pow=2;
+	    for (int i=2; i<=n;i++) {
+	    	doNothing();
+	    	pow=2*pow;
+	    }	    
+	    return pow;
+	} 
+
+	/**
+	 * Método que calcula la potencia recursiva 2 de 2 elevado al numero introducido n
+	 * 
+	 * @param n, numero al que elevar el 2
+	 * @return potencia de 2 elevado a n
+	 */
+	public long pow2Rec2 (int n) { // calcula 2 elevado a n de forma recursiva 2^n = 2^(n-1)+2^(n-1) 
+		doNothing();
+		if (n<0) 
+			throw new InvalidParameterException("No permitidos parámetros negativos como "+ n); 
+		if (n==0)
+			return 1;
+		else 
+			return pow2Rec2(n-1) + pow2Rec2(n-1);
+	} 
+	
+	/**
+	 * Método que calcula la potencia recursiva 3 de 2 elevado al numero introducido n
+	 * 
+	 * @param n, numero al que elevar el 2
+	 * @return potencia de 2 elevado a n
+	 */
+	public long pow2Rec3 (int n) { // calcula 2 elevado a n de forma recursiva 2^n = 2^(n/2)*2^(n/2) si n par y *2 si es impar 
+		doNothing();
+		if (n<0) 
+			throw new InvalidParameterException("No permitidos parámetros negativos como "+ n);
+		if (n==0)
+			return 1;
+		else if (n%2==0)
+			return pow2Rec3(n/2)*pow2Rec3(n/2);
+		else 
+			return pow2Rec3(n/2)*pow2Rec3(n/2)*2; 
+	} 
+	
+	/**
+	 * Método que calcula la potencia recursiva 4 de 2 elevado al numero introducido n
+	 * 
+	 * @param n, numero al que elevar el 2
+	 * @return potencia de 2 elevado a n
+	 */
+	public long pow2Rec4 (int n) {  // calcula 2 elevado a n de forma recursiva 2^n = como pow2Rec3 pero sin repetir llamada 
+		doNothing();
+		if (n<0)
+			throw new InvalidParameterException("No permitidos parámetros negativos como "+ n);
+		if (n==0) {
+			return 1;
+		} else { 
+			if (n%2==0) {
+				long res = pow2Rec4(n/2);
+				return res*res;
+			}
+			else { 
+				long res = pow2Rec4(n/2);
+				return 2*res*res;
+			}
+		}	
+		} 
+
+	/**
+	 * Método que calcula la potencia de un numero a elevado al numero introducido b
+	 * 
+	 * @param a, base
+	 * @param b, exponente
+	 * @return potencia de la base elevada al exponente
+	 */
+	public long potenciaRec(int a, int b) { // Calcula a elevado a b de forma recursiva por potencias sucesivas 
+		doNothing();
+		if (a<0 || b<0) 
+			throw new InvalidParameterException("No permitido alguno de los parámetros introducido"); 
+		
+		if(a==1 || b==0)
+			return 1;
+		else			
+			return a*potenciaRec(a,b-1);
+		 
+	}
+	
+	public long potenciaRecForTest(int exp) {
+		int base = 2;
+		return potenciaRec(base, exp);
+	}
+	
+	/**
+	 * Método que calcula el resto de la división de dos numeros
+	 * 
+	 * @param a, dividendo
+	 * @param b, divisor
+	 * @return resto
+	 */
+	public int restoDivRec (int a, int b) {  // calcula el resto de la división a/b de forma recursiva 
+		if (a<0 || b<=0) 
+			throw new InvalidParameterException("No permitido alguno de los parámetros introducido");
+		
+		if (a<b)
+			return a;
+		else
+			return restoDivRec(a-b,b);		
+	} 
+	
+	/**
+	 * Método que calcula la división entera de dos numeros
+	 * 
+	 * @param a, dividendo
+	 * @param b, divisor
+	 * @return division entera
+	 */
+	public int divEntRec (int a, int b) {  // calcula la división entera a/b de forma recursiva 
+		if (a<0 || b<=0) 
+			throw new InvalidParameterException("No permitido alguno de los parámetros introducido");		
+		
+		if (a<b)
+			return 0;
+		else
+			return 1+divEntRec(a-b,b);		
+	} 
+	
+	/**
+	 * Método que invierte un numero entero de forma recursiva
+	 * 
+	 * @param n, numero a invertir
+	 * @return numero invertido
+	 */
+	public int invertirEnteroRec(int n) {  // Invierte un entero invertirEnteroRec(1234)=4321 de forma recursiva
+		if (n<10)
+			return n;
+		else			
+			return (n%10) * (int)Math.pow(10, Integer.toString(n/10).length())+ invertirEnteroRec(n/10);
+	} 
+
+	/**
+	 * Método que invierte un string de forma recursiva
+	 * 
+	 * @param l, string a invertir
+	 * @return string invertido
+	 */
+	public String invertirStringRec(String l) { // Invierte un string de forma recursiva invertirStringRec("abc")="cba" 
+		if (l.length()==1)
+			return l;
+		else
+			return invertirStringRec(l.substring(1)) + l.charAt(0);
+	}
+	  
+	/**
+	 * Método que tiene una complejidad temporal lineal
+	 * 
+	 * @param n, parametro
+	 */
+	public void linear (int n) { // Algoritmo con una complejidad temporal lineal 
+		if (n<0) 
+			throw new InvalidParameterException("No permitidos parámetros negativos como "+ n); 
+		for (int i=0; i<=n; i++) {
+			doNothing();
+			System.out.println("El algoritmo se ha ejecutado: " + i + " vez/veces");
+		}
+	} 
+
+	/**
+	 * Método que tiene una complejidad temporal cuadratica
+	 * 
+	 * @param n, parametro
+	 */
+	public void quadratic(int n) { // Algoritmo con una complejidad temporal cuadrática 
+		if (n<0)
+			throw new InvalidParameterException("No permitidos parámetros negativos como "+ n);
+		for (int i=0; i<=n; i++) {
+			for (int j=0; j<=n;j++) {
+				doNothing();
+				System.out.println("El algoritmo se ha ejecutado: " + j + " vez/veces");
+			}
+			System.out.println("--------"+i+"---------");
+		}
+	} 
+	  
+	/**
+	 * Método que tiene una complejidad temporal cubica
+	 * 
+	 * @param n, parametro
+	 */
+	public void cubic(int n) { // Algoritmo con una complejidad temporal cúbica 
+		if (n<0)
+			throw new InvalidParameterException("No permitidos parámetros negativos como "+ n);
+		for (int i=0; i<=n; i++) {
+			for (int j=0; j<=n;j++) {
+				for (int k=0; k<=n;k++) {
+					doNothing();
+					System.out.println("El algoritmo se ha ejecutado: " + k + " vez/veces");
+				}
+				System.out.println("Sumado a: " + j + " vez/veces");
+			}
+			System.out.println("Y aún más: " + i + " vez/veces");
+		}
+
+	}
+	  
+	/**
+	 * Método que tiene una complejidad temporal logaritmica
+	 * 
+	 * @param n, parametro
+	 */
+	public void logarithmic(int n) { // Algoritmo con una complejidad temporal logarítmica en cualquier base 
+		if (n<0) 
+			throw new InvalidParameterException("No permitidos parámetros negativos como "+ n); 
+		while (n>0) {
+			doNothing();
+			n=n/2;
+			System.out.println(n + " cada vez se acerca más a 0");
+		}
+	} 	
+
+	/**
+	 * Método que comprueba si una matriz cuadrada es simetrica 
+	 * 
+	 * @param m, matriz a comprobar
+	 * @return true o false
+	 */
+	public boolean esSimetrica(int[][] m) { // Indica si es simétrica una matriz cuadrada de forma recursiva
+		if (m.length == 1 && m[0].length == 1) {
+			return true;
+		} else if (!esCuadrada(m)) {
+			return false;
+		} else if (esIgualFilaColumna(m)){
+			if (esSimetrica(eliminaFila(m))){
+				return true;
+			}			
+		}
+		return false;
+	}
+	
+	/**
+	 * Método que comprueba que la ultima fila es igual a la ultima columna
+	 * 
+	 * @param m, matriz a comprobar
+	 * @return true o false
+	 */
+	private boolean esIgualFilaColumna(int[][] m) {
+		for (int i=0; i<m.length; i++) {
+			if (m[m.length-1][i]!= m[i][m.length-1]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Método que elimina las filas de la matriz
+	 * 
+	 * @param m, matriz a la que eliminar las filas
+	 * @return nueva matriz con las filas eliminadas
+	 */
+	private int[][] eliminaFila(int[][] m) {
+		int [][] m2 = new int[m.length-1][m.length-1];		
+		for (int i=0; i<m.length-1; i++) {
+			for (int j=0; j<m.length-1; j++) {
+				m2[i][j]=m[i][j];
+			}
+		}
+		return m2;
+	}
+	
+	/**
+	 * Método que comprueba que una matriz es cuadrada
+	 * 
+	 * @param m, matriz a comprobar
+	 * @return true o false
+	 */
+	private boolean esCuadrada(int[][] m) {
+		for (int i=0; i<m.length;i++) {
+			if (m.length != m[i].length) {
+				return false;
+			}
+		}
+		return true;
+	}	
+}

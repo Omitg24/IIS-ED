@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ExternalProjectImportWizard">
+		<item key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED" value="true"/>
+		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value=""/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value="D:\Clase\3. Ingeniería Informática de Software\Segundo curso\Estructuras de Datos\Proyecto 3\UO281847.zip"/>
+			<item value="E:\Estructuras de Datos\ED-2021-22-TeixeiraGonzálezOmar-UO281847.zip"/>
+			<item value="D:\Clase\3. Ingeniería Informática de Software\Segundo curso\Estructuras de Datos\Proyecto 3\ED-2021-22-TeixeiraGonzálezOmar-UO281847.zip"/>
+		</list>
+	</section>
+	<section name="ChooseWorkspaceDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="814"/>
+		<item key="DIALOG_Y_ORIGIN" value="485"/>
+	</section>
+	<section name="WORKBENCH_SETTINGS">
+		<list key="ENABLED_TRANSFERS">
+		</list>
+	</section>
+</section>

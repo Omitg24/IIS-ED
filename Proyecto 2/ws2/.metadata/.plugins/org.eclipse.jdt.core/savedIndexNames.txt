@@ -1,0 +1,18 @@
+INDEX VERSION 1.131+D:\Clase\3. Ingeniería Informática de Software\Segundo curso\Estructuras de Datos\Proyecto 2\ws2\.metadata\.plugins\org.eclipse.jdt.core
+4151208548.index
+512061932.index
+1774889742.index
+279722514.index
+1113535871.index
+1919620086.index
+1262538233.index
+260727147.index
+3639381087.index
+1865797976.index
+393272115.index
+1807316243.index
+1658456392.index
+1680050689.index
+1596476078.index
+2214906199.index
+269164268.index

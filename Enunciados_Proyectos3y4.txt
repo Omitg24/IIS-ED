@@ -1,0 +1,15 @@
+Duración: 1 hora   
+
+ÁRBOLES  
+
+Implementar un método T getHermano(T elem) en la clase AVLTree que, dado un elemento, retorne el valor almacenado en su hermano. 
+En caso de que el elemento no se encuentre en el árbol o no tenga hermano se debe retornar null.  
+
+TABLAS HASH  
+
+Implementar un método int getColisiones() en la clase ClosedHashTable que retorne el número total de colisiones producidas durante las operaciones de inserción, 
+búsqueda y borrado. Se considerará una colisión a cada uno de los intentos de añadir un nuevo elemento sobre una posición de la tabla ya ocupada por otro elemento 
+válido. También se considerarán colisiones los intentos fallidos de búsqueda y borrado sobre posiciones válidas o marcadas como borradas.  
+
+Después de añadir un elemento, si se han producido 3 o más colisiones durante su inserción, se debe aumentar el tamaño de la tabla y re-dispersar de la misma 
+forma que cuando el factor de carga supera el límite.  

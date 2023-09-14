@@ -1,0 +1,22 @@
+package p4Hash;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class ClosedHashTableExamenTest {
+
+	private ClosedHashTableExamen<Integer> h;
+	
+	@Test
+	public void dispersionDeletedRateTest() {
+		h = new ClosedHashTableExamen<Integer>(8, ClosedHashTableExamen.LINEAL);
+		assertEquals(11, h.getSize());
+		assertEquals(0, h.getNumOfElems());
+		assertEquals(0, h.add(1));
+		assertEquals(0, h.add(2));
+		assertEquals(0, h.add(7));
+		
+	}
+
+}

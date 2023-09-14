@@ -1,0 +1,36 @@
+package p3Arboles;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class BSTreeExamenTest {
+	/**
+	 * Atributo t
+	 */
+	private BSTreeExamen<Integer> t;	
+	
+	/**
+	 * Test del 
+	 */
+	@Test
+	public void isPerfectlyBalancedTest() {
+		t = new BSTreeExamen<Integer>(); 
+		assertEquals(0, t.addNode(10));
+		assertEquals(0, t.addNode(4));
+		assertEquals(0, t.addNode(3));
+		assertEquals(0, t.addNode(8));
+		assertEquals(0, t.addNode(12));	
+		assertEquals(0, t.addNode(13));
+		assertEquals(0, t.addNode(11));
+		assertTrue(t.isPerfectlyBalanced());
+		assertEquals(0, t.addNode(14));
+		assertTrue(t.isPerfectlyBalanced());
+		assertEquals(0, t.addNode(15));
+		assertFalse(t.isPerfectlyBalanced());
+		assertEquals(0, t.addNode(5));
+		assertEquals(0, t.addNode(2));
+		assertTrue(t.isPerfectlyBalanced());
+		System.out.println(t.toString());		
+	}
+}

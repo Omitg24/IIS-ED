@@ -1,0 +1,931 @@
+package p2Grafos;
+
+import java.security.InvalidParameterException;
+import java.text.DecimalFormat;
+
+/**
+ * Titulo: Clase Graph
+ * 
+ * @author UO281847
+ * @version 24/09/2021
+ * @param <T>, generico
+ */
+public class GraphPractica <T>{   
+	/**
+	 * Constante infinite
+	 */
+	private static final double infinite = Double.POSITIVE_INFINITY;
+	/**
+	 * Atributo nodes
+	 */
+    protected T[] nodes; // Vector de nodos   
+    /**
+     * Atributo edges
+     */
+    protected boolean[][] edges; // matriz de aristas   
+    /**
+     * Atributo weights
+     */    
+    protected double[][] weights; // matriz de pesos   
+    /**
+     * Atributo numNodes
+     */
+    protected int numNodes; // número de elementos en un momento dado   
+    /**
+     * Matriz A de Floyd
+     */
+    protected double[][] aFloyd;
+    /**
+     * Matriz P de Floyd
+     */
+    protected int[][] pFloyd;
+   
+    /**   
+    * Se le pasa el numero maximo de nodos del grafo
+    * 
+    * @param tam, tanaño del vector de nodos
+    */   
+    @SuppressWarnings("unchecked")
+	public GraphPractica(int tam) {   
+        if (tam<0){
+        	throw new InvalidParameterException("Error: No puede crear un grafo de tamaño negativo");
+        }
+        nodes = (T[]) new Object[tam];
+        edges = new boolean[tam][tam];
+        weights = new double[tam][tam];
+        numNodes=0;
+    }   
+    /**
+     * Constructor del grafo con parámetros para personalizarlo desde el principio
+     * 
+     * @param tam, tamaño
+     * @param initialNodes, nodos iniciales
+     * @param initialEdges, aristas iniciales
+     * @param initialWeights, pesos iniciales
+     *///  debe estar incluido este constructor en la clase Graph 
+	public GraphPractica (int tam, T initialNodes[], boolean[][] initialEdges, double [][] initialWeights) {
+		// Llama al constructor original
+		this(tam); 		
+		// Pero modifica los atributos con los parametros para hacer pruebas...
+		numNodes = initialNodes.length;		
+		for (int i=0;i<numNodes;i++) {
+			// Si el vector de nodos se llama de otra forma (distinto de "nodes"), cambiad el nombre en la linea de abajo
+			nodes[i]=initialNodes[i];
+			for (int j=0;j<numNodes;j++){
+				// Si la matriz de aristas se llama de otra forma (distinto de "edges"), cambiad el nombre en la linea de abajo
+				edges[i][j]=initialEdges[i][j];
+				// Si la matriz de pesos se llama de otra forma (distinto de "weights"), cambiad el nombre en la linea de abajo
+				weights[i][j]=initialWeights[i][j];
+			}
+		}
+	} 
+	/**
+	 * Constructor del grafo con parámetros para personalizarlo desde el principio con más posibilidades
+	 * 
+	 * @param tam, tamaño
+	 * @param initialNodes, nodos iniciales
+	 * @param initialEdges, aristas iniciales
+	 * @param initialWeights, pesos iniciales
+	 * @param initialAfloyd, matriz A de Floyd inicial
+	 * @param initialPfloyd, matriz P de Floyd inicial
+	 */// Nuevo constructor en vuestro Graph, hay que mantener tambien los anteriores... 
+    public GraphPractica (int tam, T initialNodes[], boolean[][] initialEdges, double [][] initialWeights, double [][] initialAfloyd, int [][] initialPfloyd) { 
+        // Llama al constructor anterior de inicialización 
+        this(tam, initialNodes,initialEdges,initialWeights);           
+        // Pero modifica los atributos que almacenan las matrices de Floyd con los parámetros para hacer pruebas... 
+        if (initialAfloyd!=null && initialPfloyd!=null){ 
+            // Si la matriz A de floyd se llama de otra forma (distinto de "aFloyd"), refactorizar para que se llame "aFloyd"
+            aFloyd=initialAfloyd; 
+            // Si la matriz P de floyd se llama de otra forma (distinto de "pFloyd"), refactorizar para que se llame "pFloyd"
+            pFloyd=initialPfloyd; 
+        } 
+    } 
+    /**  
+     * Inserta un nuevo nodo que se le pasa como parámetro si lo inserta devuelve 0.
+     * Error 1: si ya existe, valor -1 
+     * Error 2: no cabe, valor -2 
+     * Error 3: el nodo a insertar no es válido, valor –4
+     * Se suman los errores en caso de que se den varios, por ejemplo: 
+     * si además de no ser válido no cabe, devuelve -6 (suma errores 2 y 3)
+     * 
+     * @param node, nodo
+     * @return 0, -1, -2, -4 o la suma
+     */   
+    public int addNode(T node) {     
+    	int error = addWrongNode(node);
+    	if (error != 0) {
+    		return error;
+    	}    	
+     	if (numNodes==0) {
+     		addNodeFirst(node);
+     		return 0;
+     	} else {
+     		addNodeElse(node);
+     		return 0;
+     	}		
+    }    
+    /**
+     * Método que comprueba los casos en los que no se puede añadir el nodo
+     * 
+     * @param node, nodo
+     * @return error, error
+     */
+    private int addWrongNode(T node) {
+    	int error = 0; 
+    	if (existsNode(node)) {
+    		error=error-1;
+    	}
+    	if (isFull()) {
+     		error=error-2;
+     	}
+     	if (node==null) {
+     		error=error-4;
+     	}
+     	return error;
+    }
+    /**
+     * Método que añade un nodo en la primera posición
+     * 
+     * @param node, nodo a añadir
+     */
+    private void addNodeFirst(T node) {
+    	nodes[0]=node;
+    	edges[0][0]=false;
+    	numNodes++;
+    	
+    	aFloyd=null;
+		pFloyd=null;
+    }
+    /**
+     * Método que añade un nodo en la siguiente posición no ocupada
+     *  
+     * @param node, nodo a añadir
+     */
+    private void addNodeElse(T node) {
+    	nodes[numNodes]=node;
+    	edges[numNodes][numNodes]=false;
+    	numNodes++;
+    	
+    	aFloyd=null;
+		pFloyd=null;
+    }
+    /**
+     * Método que comprueba que el vector de nodos está lleno
+     * 
+     * @return true o false
+     */
+    private boolean isFull() {
+    	return numNodes>=nodes.length;
+    }
+    /**  
+     * Obtiene el índice de un nodo en el vector de nodos, y –1 si no existe
+     *   
+ 	 * ¡¡¡ OJO que es privado porque depende de la implementación !!!
+ 	 * 
+ 	 * @param node, nodo
+ 	 * @return i o -1
+ 	 */  
+    protected int getNode(T node) {  
+    	if (node==null) {
+    		return -1;
+    	}
+    	for (int i=0; i<nodes.length; i++) {
+    		if (nodes[i]==node) {
+    			return i;
+    		}
+    	}
+    	return -1;
+    }
+    /**  
+     * Indica si existe o no el nodo en el grafo
+     * 
+     * @param node, nodo
+     * @return true   
+     */  
+    public boolean existsNode(T node) {
+    	if (getNode(node)!=-1) {
+    		return true;
+    	} 
+    	return false;
+    }
+    /**  
+     * Borra el nodo deseado del vector de nodos así como las aristas de las que  
+     * forma parte, devolviendo 0 si lo hace y –1 si no lo hace  
+     * 
+     * @param node, nodo a eliminar
+     * @return 0 o -1
+     */
+    public int removeNode(T node) {
+    	int x = getNode(node);
+		if (x != -1) {
+			numNodes--;
+			if (x != numNodes + 1) {
+				nodes[x] = nodes[numNodes];
+				nodes[numNodes] = null;
+				
+				for (int y = 0; y < numNodes; y++) {
+					edges[y][x] = edges[y][numNodes];
+					edges[x][y] = edges[numNodes][y];
+					
+					weights[y][x] = weights[y][numNodes];
+					weights[x][y] = weights[numNodes][y];
+					
+					edges[y][numNodes] = false;
+					edges[numNodes][y] = false;					
+					
+					weights[y][numNodes] = 0;
+					weights[numNodes][y] = 0;
+				}
+				edges[x][x] = edges[numNodes][numNodes];
+				weights[x][x] = weights[numNodes][numNodes];
+
+				edges[numNodes][numNodes] = false;
+				weights[numNodes][numNodes] = 0;
+			}
+			
+			aFloyd=null;
+			pFloyd=null;
+			
+			return 0;
+		} else {
+			return -1;
+		}
+    }
+    /**  
+     * Inserta una arista con el peso indicado (> 0) entre dos nodos, uno origen y  
+     * otro destino. Si la arista existe, no la inserta.  
+     * Devuelve 0 si la inserta 
+     * Se suman los valores de los errores si se dan varios simultaneamente, 
+     * por ejemplo si se dan errores 1 y 2 el resultado es la suma de los valores correspondientes (-3) 
+     * Error 1: No existe nodo origen, valor -1 
+     * Error 2: No existe nodo destino, valor -2   
+     * Error 3: Ya existe la arista, valor -4 
+     * Error 4: El peso no es válido, valor -8
+     * 
+	 * @param source, nodo origen
+     * @param target, nodo destino
+     * @param edgeWeight, peso de la arista
+     * @return error o 0
+     */ 
+    public int addEdge(T source, T target, double edgeWeight) {
+    	int error = addWrongEdge(source, target, edgeWeight);
+    	if (error!=0) {
+    		return error;
+    	}
+    	
+    	int nodeI = getNode(source);
+    	int nodeJ = getNode(target);
+    	
+    	edges[nodeI][nodeJ] = true;
+    	weights[nodeI][nodeJ] = edgeWeight;
+    	
+    	aFloyd=null;
+		pFloyd=null;
+    	
+    	return 0;
+    }  
+    /**
+     * Método que comprueba los casos en los que no se puede añadir la arista
+     *
+	 * @param source, nodo origen
+     * @param target, nodo destino
+     * @param edgeWeight, peso de la arista
+     * @return error, error si tiene
+     */
+    private int addWrongEdge(T source, T target, double edgeWeight) {
+    	int error = 0;
+    	if (!existsNode(source)) {
+    		error=error-1;
+    	}
+    	if (!existsNode(target)) {
+    		error=error-2;
+    	}
+    	if (existsEdge(source, target)) {
+    		error=error-4;
+    	}
+    	if (edgeWeight<=0) {
+    		error=error-8;
+    	}
+     	return error;
+    }
+    /**  
+     * Devuelve el peso de la arista que conecta dos nodos 
+     * Se suman los valores de los errores si se dan varios simultaneamente 
+     * Error 1: No existe nodo origen, valor –1, 
+     * Error 2: No existe nodo destino, valor -2 
+     * Error 3: No existe la arista pero sí los nodos origen y destino, valor –4 
+     * 
+     * @param source, nodo origen
+     * @param target, nodo destino
+     * @return peso
+     */ 
+    public double getEdge(T source, T target) {
+    	int error = wrongEdge(source, target);
+    	
+    	if (error != 0) {
+    		return error;
+    	}
+    	return weights[getNode(source)][getNode(target)];
+    }
+    /**
+     * Método que comprueba los casos en los que no se puede devolver la arista
+     * 
+     * @param source, nodo origen
+     * @param target, nodo destino
+     * @return error
+     */
+    private int wrongEdge(T source, T target) {
+    	int error = 0; 
+    	if (!existsNode(source)) {
+    		error=error-1;
+    	}
+    	if (!existsNode(target)) {
+    		error=error-2;
+    	}
+    	if (!existsEdge(source, target) && existsNode(source) && existsNode(target)) {
+    		error=error-4;
+    	}
+     	return error;
+	}
+	/**  
+     * Comprueba si existe una arista entre dos nodos que se pasan como parámetro  
+     * si alguno de los nodos no existe, no existe la arista evidentemente
+     * 
+     * @param source, nodo origen
+     * @param target, nodo destino
+     * @return true o false
+     */  
+    public boolean existsEdge(T source, T target) {
+    	int nodeS = getNode(source);
+    	int nodeT = getNode(target);
+    	
+    	if (nodeS == -1 || nodeT==-1) {
+    		return false;
+    	}
+    	return edges[nodeS][nodeT];
+    }    
+    /**  
+     * Borra la arista del grafo que conecta dos nodos   
+     * Se suman los valores de los errores si se dan varios simultaneamente 
+     * Error 1: No existe nodo origen, valor –1, 
+     * Error 2: No existe nodo destino, valor -2 
+     * Error 3: No existe la arista pero sí los nodos origen y destino, valor –4 
+     * devuelve 0 si la borra  
+     * 
+     * @param source, nodo origen
+     * @param target, nodo destino
+     * @return 0, -1, -2, -4 o la suma
+     */
+    public int removeEdge(T source, T target) {
+    	int error = wrongEdge(source, target);    	
+    	if (error!=0) {
+    		return error;
+    	}
+    	
+    	int nodeI = getNode(source);
+    	int nodeJ = getNode(target);
+    	
+    	edges[nodeI][nodeJ] = false;
+    	weights[nodeI][nodeJ] = 0.0;
+    	
+    	aFloyd=null;
+		pFloyd=null;
+		
+    	return 0;
+    }  
+    /**  
+     * Algoritmo de Dijkstra para encontrar el camino de coste mínimo desde nodoOrigen   
+     * hasta el resto de nodos. Devuelve el vector D de Dijkstra  
+     * Si no existe el nodoOrigen (o es inválido como parámetro) devuelve null  
+     * 
+     * @param nodoOrigen, nodoOrigen
+     * @return vectorD,, vector de pesos
+     */
+    public double[] dijkstra(T nodoOrigen) { 
+    	if (nodoOrigen == null || nodoOrigen.equals(null) || getNode(nodoOrigen)==-1) {
+    		return null;
+    	}
+    	
+    	int firstNode = getNode(nodoOrigen);
+    	double[] D = new double[numNodes];
+    	boolean[] visited = new boolean[numNodes];
+    	visited[firstNode]=true;  
+    	
+    	for (int i=0; i<numNodes;i++) {
+    		if (weights[firstNode][i]==0) {
+    			D[i]=infinite;
+    		} else {
+    			D[i] = weights[firstNode][i];
+    		}
+    		if (i==firstNode && weights[i][firstNode]==0) {
+    			D[firstNode]=0;
+    		}
+    	}
+    	
+    	int[] P = new int[numNodes];
+    	for (int i=0; i<numNodes;i++) {
+    		P[i]=-1;
+    	}
+    	
+    	int min = minCost(D, visited);
+    	while (min!=-1) {
+    		for (int i=0; i<numNodes;i++) {
+    			if (min==-1) {
+    				return D;
+    			}
+    			if (!visited[i]) {
+    				if (D[min] + weights[min][i] < D[i] && edges[min][i]) {
+    					D[i] = D[min] + weights[min][i];
+    					P[i] = min;
+    				}
+    			}
+    		}
+    		min = minCost(D, visited);
+    	}    	
+    	return D;
+    }      
+    /** 
+     * Busca el nodo con distancia minima en D al resto de nodos, 
+     * se le pasa el vector D de dijkstra y 
+     * el conjunto de visitados (como un vector de booleanos) y 
+     * devuelve el indice del nodo buscado 
+     * Si hay varios con mismo coste devuelve el que tenga índice 
+     * más bajo en el vector de nodos 
+     * o -1 si el grafo es no conexo o no quedan nodos sin visitar  
+     * 
+     * @param vectorD, vector D
+     * @param visited, vectores visitados
+     * @return ind, minimo Coste
+     */  
+    private int minCost(double[] vectorD, boolean[] visited) {
+    	double minimum = infinite;
+    	int ind = -1;
+    	
+    	for (int i=0; i<visited.length; i++) {
+    		if (!visited[i]) {
+    			if (vectorD[i]<minimum) {
+    				minimum = vectorD[i];
+    				ind = i;
+    			}
+    		}
+    	}
+    	
+    	if (ind == -1 ) {
+    		return ind;
+    	}
+    	visited [ind]=true;
+    	return ind;
+    }   
+    
+    /**  
+     * Aplica el algoritmo de Floyd al grafo y devuelve 0 si lo aplica y genera matrices A y P; y –1 si no lo hace
+     * 
+     * @return 0 o -1
+     */  
+    public int floyd() {
+    	if (numNodes==0) {
+    		return -1;
+    	}
+    	
+    	aFloyd = new double[numNodes][numNodes];
+    	pFloyd = new int[numNodes][numNodes];
+    	
+    	for (int i=0; i<pFloyd.length; i++) {
+    		for (int j=0; j<pFloyd[0].length;j++) {
+    			if (weights[i][j]==0) {
+    				aFloyd[i][j]=infinite;
+    			} else {
+    				aFloyd[i][j] = weights[i][j];
+    			}
+    			if (i==j) {
+    				aFloyd[i][j]=0;
+    			}
+    			pFloyd[i][j]=-1;
+    		}
+    	}
+    	
+    	for (int k=0; k<numNodes; k++) {
+    		for (int i=0; i<numNodes;i++) {
+    			for (int j=0; j<numNodes; j++) {
+    				if (aFloyd[i][k] + aFloyd[k][j] < aFloyd[i][j]) {
+    					aFloyd[i][j] = aFloyd[i][k] + aFloyd[k][j];
+    					pFloyd[i][j] = k;
+    				}
+    			}
+    		}
+    	}
+    	return 0;
+    }   
+    /**   
+     * Devuelve la matriz A de Floyd, con infinito si no hay camino   
+     * Si no se ha invocado a Floyd debe devolver null  (OJO que no lo invoca) 
+     * 
+     * @return aFloyd, matriz A de Floyd
+     */
+    protected double[][] getAFloyd() {
+    	return aFloyd;
+    }
+    /**   
+     * Devuelve la matriz P de Floyd, con -1 en las posiciones en las que no hay nodo intermedio   
+     * Si no se ha invocado a Floyd debe devolver null  (OJO que no lo invoca) 
+     * 
+     * @return pFloyd, matriz P de Floyd
+     */   
+    protected int[][] getPFloyd() { 
+    	return pFloyd;
+    } 
+    /** 
+     * Devuelve el coste del camino de coste mínimo entre origen y destino según Floyd  
+     * Si no están generadas las matrices de Floyd, las genera.  
+     * Si no puede obtener el valor por alguna razón, devuelve –1 (OJO que es distinto de infinito)  
+     * 
+     * @param origen, nodoOrigen
+     * @param destino, nodoDestino
+     * @return minCost, coste minimo del camino
+     */
+    public double minCostPath(T origen, T destino) {
+    	int indexOrigen = getNode(origen);
+    	int indexDestino = getNode(destino);
+    	
+    	if (indexOrigen==-1 || indexDestino==-1) {
+    		return -1;
+    	}
+    	
+    	if (aFloyd==null && pFloyd==null) {
+    		floyd();
+    	}	
+    	
+    	return aFloyd[indexOrigen][indexDestino];
+    }     
+    /**  
+     * Indica el camino entre los nodos que se le pasan como parámetros en un String de esta forma:  
+     * Origen<tab>(coste0)<tab>Intermedio1<tab>(coste1)….IntermedioN<tab>(costeN)<tab>Destino<tab>  
+     * Si no están generadas las matrices de Floyd, las genera, si se puede.  
+     * Si no hay camino: Origen<tab>(Infinity)<tab>Destino<tab> 
+     * Si Origen y Destino coinciden: Origen<tab>  
+     * Si no existen los 2 nodos devuelve una cadena vacía  
+     * 
+     * @param origen, nodo Origen
+     * @param destino, nodo Destino
+     * @return camino, cadena con el camino
+     */  
+    public String path(T origen, T destino) {
+    	int indexOrigen = getNode(origen);
+    	int indexDestino = getNode(destino);
+    	String path = "";
+    	
+    	if (aFloyd==null && pFloyd==null) {
+    		floyd();
+    	}	
+    	if (indexOrigen==-1 || indexDestino==-1) {
+    		return path;
+    	} else if (indexOrigen==-1 || indexDestino==-1) {
+    		return origen.toString() + "\t" + "Infinity" + "\t" + destino.toString();
+    	} else if (indexOrigen==indexDestino) {
+    		return String.valueOf(origen) + "\t"; 
+    	}    	
+    	
+    	boolean[] accesible = new boolean[numNodes];
+    	accesible = aNodes(origen, accesible);
+    	if (!accesible[getNode(destino)]) {
+    		return  origen.toString() + "\t" + "Infinity" + "\t" + destino.toString();
+    	}
+    	
+    	return recursivePath(indexOrigen, indexDestino, path);
+    }
+    /**
+     * Método que devuelve el vector con los nodos accesibles desde el que se pasa como parámetro
+     * 
+     * @param origen, nodo origen
+     * @param accesible, vector de nodos accesibles
+     * @return accesible, vector de nodos accesibles
+     */
+    private boolean[] aNodes(T origen, boolean[] accesible) {
+    	int indexOrigen = getNode(origen);     	
+    	accesible[indexOrigen] = true;
+		
+		for (int i=0; i<accesible.length;i++) {
+			if (!accesible[i] && edges[indexOrigen][i]) {
+				aNodes(nodes[i],accesible);
+			}
+		}
+		return accesible;
+	}
+    /**
+     * Método que calcula el camino de forma recursiva, pasando por los nodos
+     * 
+     * @param indexOrigen, indice del nodo Origen
+     * @param indexDestino, indice del nodo Destino
+     * @param path, camino
+     * @return camino
+     */
+	private String recursivePath(int indexOrigen, int indexDestino, String path) {
+		int k = pFloyd[indexOrigen][indexDestino];
+		
+		if (k>=0) {
+			path = path + recursivePath(indexOrigen, k, path);
+			path = path + recursivePath(k, indexDestino, path);
+			
+			return path;
+		}
+		
+		if (path.equals("")) {
+			return nodes[indexOrigen].toString() + "\t" + "(" + aFloyd[indexOrigen][indexDestino] + ")" + "\t" + nodes[indexDestino].toString();
+		} else {
+			return "\t" + "(" + weights[indexOrigen][indexDestino] + ")" + "\t" + nodes[indexDestino].toString();
+		}
+	}
+	/**
+     * Lanza el recorrido en profundidad de un grafo desde un nodo determinado,  
+     * No necesariamente recorre todos los nodos.  
+     * Al recorrer cada nodo añade el toString del nodo y un tabulador  
+     * Se puede usar un método privado recursivo...  
+     * Se recorren vecinos empezando por el principio del vector de nodos (antes índices bajos) 
+     * Si no existe el nodo devuelve una cadena vacia
+     * 
+     * @param origen, nodo desde el que empieza el recorrido
+     * @return recorrido, cadena con recorrido en profundidad
+     */  
+    public String recorridoProfundidad(T origen) {
+    	int indexOrigen = getNode(origen);
+    	String recorrido  = "";
+    	
+    	if (indexOrigen == -1 || origen==null || origen.equals(null)) {
+    		return recorrido;
+    	}
+    	
+    	boolean[] visited = new boolean[numNodes];
+    	visited[indexOrigen] = true;
+    	recorrido = origen.toString() + "\t";
+    	
+    	for (int i=0; i<visited.length; i++) {
+    		if (!visited[i] && edges[indexOrigen][i]) {
+    			recorrido = recorrido + recursiveRecorrido(i, visited); 
+    		}
+    	}
+    	return recorrido; 
+    }  
+    /**
+     * Método recursivo que recorre todos los nodos del vector de visitados, 
+     * comprueba que tienen una arista en comun con la posición del nodo 
+     * que se le pasa como parámetro, marca este nodo como visitado y le añade el toString al recorrido
+     * 
+     * @param i, posición de los nodos
+     * @param visited, vector de nodos visitados
+     * @return recorridoR, parte final del recorrido
+     */
+    private String recursiveRecorrido(int i, boolean[] visited) {
+    	visited[i] = true;
+    	String recorridoR =  nodes[i].toString() + "\t";
+    	
+    	for (int j=0; j<visited.length;j++) {
+    		if (!visited[j] && edges[i][j]) {
+    			recorridoR = recorridoR + recursiveRecorrido(j, visited);
+    		}
+    	}
+		return recorridoR;
+	}    
+    /**
+     * Método que comprueba que un grafo es conexo
+     * 
+     * @return true o false
+     */
+    public boolean esConexo() {
+    	if (getAFloyd()==null) {
+    		floyd();
+    	}
+    	for (int i=0; i<aFloyd.length; i++) {
+    		for (int j=0; j<aFloyd[i].length;j++) {
+    			if (aFloyd[i][j]==infinite) {
+    				return false;
+    			}
+    		}
+    	}
+    	return true;
+    }    
+    /**
+     * Método que cuenta el numero de nodos sumidero
+     * 
+     * @return counterSumideros
+     */
+    public int contarSumideros() {
+    	int counterSumideros = 0;
+    	int counterPosiciones = 0;
+    	boolean unoAlMenos = false;
+    	for (int i=0; i<numNodes; i++) {
+    		for (int j=0; j<numNodes; j++) {
+    			if (!edges[i][j]) {
+    				counterPosiciones++;
+    			}
+    			if (edges[j][i]) {
+    				unoAlMenos = true;
+    			}
+    			if (counterPosiciones==numNodes&& unoAlMenos) {
+    				counterSumideros++;
+    			}
+    		}
+    		unoAlMenos=false;
+    		counterPosiciones = 0;
+    	}
+    	return counterSumideros;
+    }    
+    /**
+     * Método que cuenta el número de nodos fuente
+     * 
+     * @return counterFuentes
+     */
+    public int contarFuentes() {
+    	int counterFuentes = 0;
+    	int counterPosiciones = 0;
+    	boolean unoAlMenos=false;
+    	for (int i=0; i<numNodes;i++) {
+    		for (int j=0; j<numNodes;j++) {
+    			if (!edges[j][i]) {
+    				counterPosiciones++;
+    			}
+    			if (edges[i][j]) {
+    				unoAlMenos=true;
+    			}
+    			if (counterPosiciones==numNodes && unoAlMenos) {
+    				counterFuentes ++;
+    			}
+    		}
+    		counterPosiciones = 0;
+    		unoAlMenos = false;
+    	}
+    	return counterFuentes;
+    }    
+    /**
+     * Método que cuenta el número de nodos inaccesibles
+     * 
+     * @return counterInaccesibles
+     */
+    public int contarInaccesibles() {
+//    	int counterInaccesibles=0;
+//        int counterPosiciones=0;
+//        for(int i=0;i<numNodes;i++) {
+//            for(int j=0;j<numNodes;j++) {
+//                if(!edges[j][i]) {
+//                	counterPosiciones++;
+//                }
+//                if(counterPosiciones==numNodes) {
+//                	counterInaccesibles++;
+//                }
+//            }
+//            counterPosiciones=0;
+//        }
+//        return counterInaccesibles;
+    	return contarAislados() + contarFuentes();
+    }    
+    /**
+     * Método que cuenta el número de nodos aislados
+     * 
+     * @return counterAislados
+     */
+    public int contarAislados() {
+    	int counterAislados=0;
+        int counterPosiciones=0;
+        for(int i=0;i<numNodes;i++) {
+            for(int j=0;j<numNodes;j++) {
+                if(!edges[i][j] && !edges[j][i] ) {
+                	counterPosiciones++;
+                }
+                if(counterPosiciones==numNodes) {
+                	counterAislados++;
+                }
+            }
+            counterPosiciones=0;
+        }
+        return counterAislados;
+    }    
+    /**
+     * Método que calcula la reciprocidad de las aristas
+     * 
+     * @return reciprocity
+     */
+    public double reciprocity() {
+    	double edges = 0;
+    	double reciprocityEdges = 0;
+    	
+    	for(int i=0;i<numNodes;i++) {
+            for(int j=0;j<numNodes;j++) {
+            	if(this.edges[i][j]) {
+            		edges++;
+            		if (this.edges[j][i]) {
+            			reciprocityEdges++;
+            		}
+            	} 	
+            }
+        }    	
+    	return (reciprocityEdges / edges);
+    }
+    /**
+     * Método que cuenta el número de ciclos, debe invocar al método de floyd que permite que haya ciclos
+     * 
+     * @return true o false
+     */
+    public boolean contieneCiclos() { 
+    	for (int i=0; i<numNodes; i++) {
+    		for (int j=0; j<numNodes;j++) {
+    			if (i!=j && getAFloyd()[i][j]!=infinite && getAFloyd()[j][i]!=infinite) {
+    				return true;
+    			}
+    		}
+    	}
+    	return false;
+    } 
+    public T obtenerCentro() {
+    	floyd();
+    	
+    	int position = 0;
+    	double[] vectorA = new double[numNodes];
+    	double[] vectorB = new double[numNodes];
+    	for (int i=0; i<numNodes; i++) {
+    		for (int j=0; j<numNodes; j++) {
+    			position++;
+    			vectorA[i]=aFloyd[j][i];
+    			if (position==numNodes) {
+    				vectorB[i]=getMax(vectorA);
+    			}
+    		}
+    		position = 0;
+    	}
+    	int fila = (int) getMin(vectorB);
+    	return nodes[fila];
+    }
+    private double getMin(double[] vector) {
+    	double min = 0;
+    	for (int i = 0; i<vector.length; i++) {
+    		if (vector[i]>min) {
+    			min=vector[i];
+    		}
+    	}
+    	return min;
+	}
+	private double getMax(double[] vector) {
+    	double max = 0;
+    	for (int i = 0; i<vector.length; i++) {
+    		if (vector[i]>max) {
+    			max=vector[i];
+    		}
+    	}
+    	return max; 
+    }
+    
+	/**
+     * Devuelve un String con la informacion del grafo (incluyendo matrices de Floyd)  
+ 	 * Si se ha usado para pruebas el toString anterior, sería conveniente renombrarlo antes (mediante refactorizacion) 
+     * antes de sustituirlo por este, para que sigan pasando las pruebas anteriores sin problemas. 
+     * 
+     * @return cadena, string
+     */    
+    public String toString() {  
+        DecimalFormat df = new DecimalFormat("#.##");  
+        String cadena = "";    
+
+        cadena += "NODES\n";  
+        for (int i = 0; i < numNodes; i++) {  
+            cadena += nodes[i].toString() + "\t";  
+        }  
+        cadena += "\n\nEDGES\n";  
+        for (int i = 0; i < numNodes; i++) {  
+            for (int j = 0; j < numNodes; j++) {  
+                if (edges[i][j])  
+                    cadena += "T\t";  
+                else  
+                    cadena += "F\t";  
+            }  
+            cadena += "\n";  
+        }  
+        cadena += "\nWEIGHTS\n";  
+        for (int i = 0; i < numNodes; i++) {  
+            for (int j = 0; j < numNodes; j++) {  
+                cadena += (edges[i][j]?df.format(weights[i][j]):"-") + "\t";  
+            }  
+            cadena += "\n";  
+        }  
+
+        double[][] aFloyd = getAFloyd();  
+        if (aFloyd != null) {  
+            cadena += "\nAFloyd\n"; 
+            for (int i = 0; i < numNodes; i++) {  
+                for (int j = 0; j < numNodes; j++) {  
+                    cadena += df.format(aFloyd[i][j]) + "\t";  
+                }  
+                cadena += "\n";  
+            }  
+        }  
+   
+        int[][] pFloyd = getPFloyd();  
+        if (pFloyd != null) {  
+                cadena += "\nPFloyd\n";  
+            for (int i = 0; i < numNodes; i++) {  
+                for (int j = 0; j < numNodes; j++) { 
+                    cadena += (pFloyd[i][j]>=0?df.format(pFloyd[i][j]):"-") + "\t";  
+                }  
+                cadena += "\n";  
+            }  
+        }  
+        return cadena;  
+    }  
+}  

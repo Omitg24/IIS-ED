@@ -1,0 +1,182 @@
+Empieza la prueba basica de nodos: 
+g=new Graph<Integer>(3): 
+1 g.existsNode(1): false
+2 g.existsNode(2): false
+3 g.addNode(1): 0
+4 g.addNode(2): 0
+5 g.existsNode(1): true
+6 g.existsNode(2): true
+7 g.addNode(1): -1
+8 g.addNode(2): -1
+9 g.addNode(3): 0
+10 g.addNode(4): -2
+11 g.existsNode(4): false
+12 g.existsNode(5): false
+Termina la prueba basica de nodos.
+
+Empieza la prueba basica de aristas: 
+g=new Graph<Integer>(3): 
+1 g.existsEdge(1,2): false
+2 g.getEdge(1,2): -3.0
+3 g.addNode(1): 0
+4 g.existsEdge(1,2): false
+5 g.getEdge(1,2): -2.0
+6 g.existsEdge(2,1): false
+7 g.getEdge(2,1): -1.0
+8 g.addNode(2): 0
+9 g.existsEdge(1,2): false
+10 g.getEdge(1,2): -4.0
+11 g.addEdge(1,2,12.12): 0
+12 g.addEdge(1,2,12.1212): -4
+13 g.addNode(3): 0
+14 g.existsEdge(1,3): false
+15 g.existsEdge(3,2): false
+16 g.getEdge(1,3): -4.0
+17 g.getEdge(3,2): -4.0
+18 g.addEdge(1,1,11.11): 0
+19 g.addEdge(1,2,12.12): -4
+20 g.addEdge(1,3,13.13): 0
+21 g.addEdge(2,1,21.21): 0
+22 g.addEdge(2,2,22.22): 0
+23 g.addEdge(2,3,23.23): 0
+24 g.addEdge(3,1,31.31): 0
+25 g.addEdge(3,2,32.32): 0
+26 g.addEdge(3,3,33.33): 0
+27 g.addEdge(1,1,11.11): -4
+28 g.addEdge(1,2,12.12): -4
+29 g.addEdge(1,3,13.13): -4
+30 g.addEdge(2,1,21.21): -4
+31 g.addEdge(2,2,22.22): -4
+32 g.addEdge(2,3,23.23): -4
+33 g.addEdge(3,1,31.31): -4
+34 g.addEdge(3,2,32.32): -4
+35 g.addEdge(3,3,33.33): -4
+36 g.getEdge(1,1,11.11): 11.11
+37 g.getEdge(1,2,12.12): 12.12
+38 g.getEdge(1,3,13.13): 13.129999999999999
+39 g.getEdge(2,1,21.21): 21.21
+40 g.getEdge(2,2,22.22): 22.22
+41 g.getEdge(2,3,23.23): 23.23
+42 g.getEdge(3,1,31.31): 31.310000000000002
+43 g.getEdge(3,2,32.32): 32.32
+44 g.getEdge(3,3,33.33): 33.33
+Termina la prueba basica de aristas.
+
+Empieza la prueba basica de evolucion: 
+1 g.existsNode(1): false
+2 g.existsNode(2): false
+3 g.addNode(1): 0
+4 g.addNode(2): 0
+5 g.existsNode(1): true
+6 g.existsNode(2): true
+7 g.addNode(1): -1
+8 g.addNode(2): -1
+9 g.addEdge(1,2, 1.2): 0
+10 g.addEdge(2,1, 2.1): 0
+11 g.addEdge(1,1, 1.1): 0
+12 g.getEdge(1,2): 1.2
+13 g.getEdge(2,1): 2.1
+14 g.getEdge(1,1): 1.1
+15 g.getEdge(2,3): -2.0
+16 g.existsEdge(1,2): true
+17 g.existsEdge(2,1): true
+18 g.existsEdge(1,1): true
+19 g.existsEdge(2,2): false
+20 g.removeEdge(2,2): -4
+21 g.addEdge(2,2,2.2): 0
+22 g.getEdge(2,2): 2.2
+23 g.existsEdge(2,2): true
+24 g.removeEdge(2,2): 0
+25 g.removeNode(3): -1
+26 g.addNode(3): 0
+27 g.addNode(4): -2
+28 g.getEdge(1, 3): -4.0
+29 g.addEdge(1,3, 1.3): 0
+30 g.existsEdge(1, 3): true
+31 g.getEdge(1, 3): 1.3
+32 g.getEdge(1, 4): -2.0
+33 g.getEdge(5,1): -1.0
+34 g.getEdge(5,4): -3.0
+35 g.removeNode(3): 0
+36 g.removeNode(3): 0
+37 g.existsEdge(1, 3): true
+38 g.getEdge(1, 3): 1.3
+39 g.removeNode(2): 0
+40 g.removeNode(2): 0
+41 g.existsEdge(1, 1): true
+42 g.removeNode(1): 0
+43 g.existsNode(1): true
+44 g.existsNode(2): true
+45 g.existsNode(3): true
+46 g.existsNode(4): false
+47 g.addNode(4): 0
+48 g.existsNode(4): true
+49 g.addEdge(4,4, 4.4): 0
+50 g.existsEdge(4, 4): true
+51 g.getEdge(4, 4): 4.4
+52 g.removeNode(4): 0
+53 g.removeNode(4): 0
+54 g.existsEdge(4, 4): true
+55 g.addNode(7): 0
+56 g.removeNode(2): 0
+57 g.removeNode(3): 0
+58 g.removeNode(4): -1
+59 g.existsEdge(7, 7): false
+60 g.addEdge(7,7, 7.7): 0
+61 g.addEdge(7,7, 17.17): -4
+62 g.getEdge(7, 7): 7.7
+63 g.addNode(8): 0
+64 g.addNode(9): 0
+65 g.existsEdge(7, 8): false
+66 g.existsEdge(8, 7): false
+67 g.existsEdge(8, 8): false
+68 g.existsEdge(8, 9): true
+69 g.existsEdge(9, 8): true
+70 g.existsEdge(9, 9): false
+71 g.addEdge(7,8, 7.8): 0
+72 g.addEdge(8,7, 8.7): 0
+73 g.addEdge(8,8, 8.8): 0
+74 g.addEdge(8,9, 8.9): -4
+75 g.addEdge(9,8, 9.8): -4
+76 g.addEdge(9,9, 9.9): 0
+77 g.addEdge(7,9, 7.9): 0
+78 g.addEdge(9,7, 9.7): 0
+79 g.getEdge(7, 7) --> -4.0
+80 g.getEdge(7, 8) --> 7.8
+81 g.getEdge(7, 9) --> 7.9
+82 g.getEdge(8, 7) --> 8.7
+83 g.getEdge(8, 8) --> 8.8
+84 g.getEdge(8, 9) --> 1.2
+85 g.getEdge(9, 7) --> 9.7
+86 g.getEdge(9, 8) --> 2.1
+87 g.getEdge(9, 9) --> 9.9
+88 g.removeNode(7): 0
+89 g.removeNode(7): 0
+90 g.getEdge(7, 7) --> -4.0
+91 g.getEdge(7, 8) --> 7.8
+92 g.getEdge(7, 9) --> 7.9
+93 g.getEdge(8, 7) --> 8.7
+94 g.getEdge(8, 8) --> 8.8
+95 g.getEdge(8, 9) --> 1.2
+96 g.getEdge(9, 7) --> 9.7
+97 g.getEdge(9, 8) --> 2.1
+98 g.getEdge(9, 9) --> 9.9
+99 g.removeNode(null): -1
+100 g.addNode(null): -4
+101 g.addNode(10): 0
+102 g.getEdge(8, 10) --> 8.7
+103 g.getEdge(10, 9) --> 7.9
+104 g.addNode(null): -6
+105 g.addEdge(8,8,-8.8): -12
+106 g.addEdge(7,8,-7.8): -9
+107 g.addEdge(8,7,-8.7): -10
+108 g.addEdge(7,7,-7.7): -11
+109 g.addEdge(null,8,0.8): -1
+110 g.addEdge(8,null,0.8): -2
+111 g.addEdge(null,null,0.8): -3
+112 g.getEdge(null,10): -1.0
+113 g.getEdge(10,null): -2.0
+114 g.getEdge(null,null): -3.0
+115 g.existsNode(null): false
+116 g.existsEdge(null,null): false
+Termina la prueba basica de evolucion.

@@ -1,0 +1,30 @@
+package p1Algoritmia;
+
+import org.junit.jupiter.api.Test;
+
+/**
+ * @version 2021-22
+ */
+
+class AlgorithmsBenchmarkTest {
+
+	/**
+	 * Test para el calculo del tiempo de ejecucion del algoritmo implementado en el metodo "miPrueba" de la clase "Algotithms"
+	 */
+	@Test
+	void testLinearBenchmark() {
+		AlgorithmsBenchmark ab = new AlgorithmsBenchmark();
+//		ab.testFinal("factorial.txt", 0, 63, 5, "p1Algoritmia.Algorithms", "factorial");
+//		ab.testFinal("pow2Rec1.txt", 0, 62, 5, "p1Algoritmia.Algorithms", "pow2Rec1");
+		ab.testFinal("pow2Iter.txt", 0, 62, 5, "p1Algoritmia.Algorithms", "pow2Iter");
+//		ab.testFinal("pow2Rec2.txt", 0, 12, 5, "p1Algoritmia.Algorithms", "pow2Rec2");
+//		ab.testFinal("pow2Rec3.txt", 0, 62, 5, "p1Algoritmia.Algorithms", "pow2Rec3");
+//		ab.testFinal("pow2Rec4.txt", 0, 62, 5, "p1Algoritmia.Algorithms", "pow2Rec4");
+//		ab.testFinal("fibonacci.txt", 0, 17, 5, "p1Algoritmia.Algorithms", "fibonacci");
+//		ab.testFinal("linear.txt", 0, 100, 5, "p1Algoritmia.Algorithms", "linear");
+//		ab.testFinal("quadratic.txt", 0, 30, 5, "p1Algoritmia.Algorithms", "quadratic");
+//		ab.testFinal("cubic.txt", 0, 12, 5, "p1Algoritmia.Algorithms", "cubic");
+//		ab.testFinal("logarithmic.txt", 0, 100, 5, "p1Algoritmia.Algorithms", "logarithmic");
+//		ab.testFinal("potenciaRecForTest.txt", 0, 62, 5, "p1Algoritmia.Algorithms", "potenciaRecForTest");
+	}
+}

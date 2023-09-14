@@ -1,0 +1,55 @@
+package p4Hash;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class ClosedHashTableExamenTest {
+
+	private ClosedHashTableExamen<Integer> h;
+	
+	@Test
+	public void dispersionDeletedRateTest() {
+		h = new ClosedHashTableExamen<Integer>(8, ClosedHashTableExamen.LINEAL);
+		assertEquals(11, h.getSize());
+		assertEquals(0, h.getNumOfElems());
+		assertEquals(0, h.add(1));
+		assertEquals(0, h.add(2));
+		assertEquals(0, h.add(7));
+		assertEquals(0, h.add(0));
+		assertEquals(0, h.add(6));
+		assertEquals(0.45, h.getLF(), 0.01);
+		assertEquals(0.0, h.getDeletedRate(), 0.01);
+		assertEquals(0, h.remove(1));
+		assertEquals(0.36, h.getLF(), 0.01);
+		assertEquals(0.09, h.getDeletedRate(), 0.01);
+		assertEquals(0, h.remove(2));
+		assertEquals(0.27, h.getLF(), 0.01);
+		assertEquals(0.18, h.getDeletedRate(), 0.01);
+		assertEquals(0, h.remove(6));
+		assertEquals(0.18, h.getLF(), 0.01);
+		assertEquals(0.0, h.getDeletedRate(), 0.01);
+		assertEquals(0, h.remove(7));
+		assertEquals(0.2, h.getLF(), 0.01);
+		assertEquals(0, h.add(6));
+		assertEquals(0.4, h.getLF(), 0.01);
+		assertEquals(0, h.add(0));
+		assertEquals(0.27, h.getLF(), 0.01);
+		assertEquals(0, h.add(7));
+		assertEquals(0.36, h.getLF(), 0.01);
+		assertEquals(0, h.add(5));
+		assertEquals(0.45, h.getLF(), 0.01);
+		assertEquals(0, h.add(2));
+		assertEquals(0.26, h.getLF(), 0.01);
+		assertEquals(0, h.remove(6));
+		assertEquals(0.21, h.getLF(), 0.01);
+		assertEquals(0.04, h.getDeletedRate(), 0.01);
+		assertEquals(0, h.remove(0));
+		assertEquals(0.17, h.getLF(), 0.01);
+		assertEquals(0.08, h.getDeletedRate(), 0.01);
+		assertEquals(0, h.remove(0));
+		assertEquals(0.18, h.getDeletedRate(), 0.01);
+		System.out.println(h.toString());
+	}
+
+}

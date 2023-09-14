@@ -1,0 +1,491 @@
+package p1Algoritmia;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+/**
+ * Clase Test
+ *  
+ * @author Omar Teixeira González
+ * @version 10/09/2021
+ */
+class AlgorithmsTest {	
+///*
+// *	Pruebas del metodo factorial:
+// */	
+//	/**
+//	 * Test que comprueba que el factorial de 4 es 24
+//	 */
+//	@Test
+//	void testFact1() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(24, alg.factorial(4));
+//	}	
+//	/**
+//	 * Test que comprueba que el factorial de 6 es 720
+//	 */
+//	@Test
+//	void testFact2() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(720, alg.factorial(6));
+//	}	
+//	/**
+//	 * Test que comprueba que el factorial de 10 es 3628800
+//	 */
+//	@Test
+//	void testFact3() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(3628800, alg.factorial(10));
+//	}	
+//	/**
+//	 * Test que comprueba que el factorial de 10 es 3628800
+//	 */
+//	@Test
+//	void testFact4() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(120, alg.factorial(5));
+//	}
+//
+///*
+// * Pruebas del metodo fibonacci:
+// */
+//	/**
+//	 * Test que comprueba que el fibonacci de 1
+//	 */
+//	@Test
+//	void testFib1() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(1, alg.fibonacci(1));
+//	}	
+//	/**
+//	 * Test que comprueba que el fibonacci de 4
+//	 */
+//	@Test
+//	void testFib2() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(3, alg.fibonacci(4));
+//	}
+//	/**
+//	 * Test que comprueba que el fibonacci de 7
+//	 */
+//	@Test
+//	void testFib3() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(13, alg.fibonacci(7));
+//	}	
+//	/**
+//	 * Test que comprueba que el fibonacci de 7
+//	 */
+//	@Test
+//	void testFib4() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(55, alg.fibonacci(10));
+//	}
+//	
+///*
+// *	Pruebas del metodo pow2Rec1:
+// */	
+//	/**
+//	 * Test que comprueba que la potencia recursiva de 2 elevado a 3
+//	 */
+//	@Test
+//	void testPow2Rec11() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(8, alg.pow2Rec1(3));
+//	}	
+//	/**
+//	 * Test que comprueba que la potencia recursiva de 2 elevado a 6 es 64
+//	 */
+//	@Test
+//	void testPow2Rec12() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(64, alg.pow2Rec1(6));
+//	}	
+//	/**
+//	 * Test que comprueba que la potencia recursiva de 2 elevado a 10 es 1024
+//	 */
+//	@Test
+//	void testPow2Rec13() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(1024, alg.pow2Rec1(10));
+//	}	
+//	/**
+//	 * Test que comprueba que la potencia recursiva de 2 elevado a 15 es 32768
+//	 */
+//	@Test
+//	void testPow2Rec14() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(32768, alg.pow2Rec1(15));
+//	}
+//	
+///*
+// *	Pruebas del metodo potenciaRec:
+// */	
+//	/**
+//	 * Test que comprueba que la potencia de 4 elevado a 3 es 64
+//	 */
+//	@Test
+//	void testPotenciaRec1() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(64, alg.potenciaRec(4,3));
+//	}	
+//	/**
+//	 * Test que comprueba que la potencia de 3 elevado a 7 es 2187
+//	 */
+//	@Test
+//	void testPotenciaRec2() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(2187, alg.potenciaRec(3,7));
+//	}	
+//	/**
+//	 * Test que comprueba que la potencia de 10 elevado a 5 es 100000
+//	 */
+//	@Test
+//	void testPotenciaRec3() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(100000, alg.potenciaRec(10,5));
+//	}
+//	/**
+//	 * Test que comprueba que la potencia de 10 elevado a 5 es 100000
+//	 */
+//	@Test
+//	void testPotenciaRec4() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(2985984, alg.potenciaRec(12,6));
+//	}
+//	
+///*
+// * Pruebas del metodo restoDivRec:
+// */
+//	/**
+//	 * Test que comprueba que el resto de 10/3 es 1
+//	 */
+//	@Test
+//	void testRestoDivRec1() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(1, alg.restoDivRec(10,3));
+//	}	
+//	/**
+//	 * Test que comprueba que el resto de 50/7 es 1
+//	 */
+//	@Test
+//	void testRestoDivRec2() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(2, alg.restoDivRec(50,8));
+//	}	
+//	/**
+//	 * Test que comprueba que el resto de 12/30 es 12
+//	 */
+//	@Test
+//	void testRestoDivRec3() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(12, alg.restoDivRec(12,30));
+//	}	
+//	/**
+//	 * Test que comprueba que el resto de 180/60 es 0
+//	 */
+//	@Test
+//	void testRestoDivRec4() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(0, alg.restoDivRec(180,60));
+//	}
+//	
+///*
+// * Pruebas del metodo restoDivRec:
+// */
+//	/**
+//	 * Test que comprueba que la division entera de 7/3 es 2
+//	 */
+//	@Test
+//	void testDivEntRec1() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(2, alg.divEntRec(7,3));
+//	}	
+//	/**
+//	 * Test que comprueba que la division entera de 36/5 es 7
+//	 */
+//	@Test
+//	void testDivEntRec2() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(7, alg.divEntRec(36,5));
+//	}	
+//	/**
+//	 * Test que comprueba que la division entera de 2/6 es 0
+//	 */
+//	@Test
+//	void testDivEntRec3() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(0, alg.divEntRec(2,6));
+//	}	
+//	/**
+//	 * Test que comprueba que la division entera de 53/5 es 10
+//	 */
+//	@Test
+//	void testDivEntRec4() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(10, alg.divEntRec(53,5));
+//	}
+//	
+///*
+// * Pruebas del metodo invertirEnteroRec:
+// */
+//	/**
+//	 * Test que comprueba que invertir 1234 es 4321
+//	 */
+//	@Test
+//	void testInvertirEnteroRec1() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(4321, alg.invertirEnteroRec(1234));	
+//	}	
+//	/**
+//	 * Test que comprueba que invertir 612149 es 941216
+//	 */
+//	@Test
+//	void testInvertirEnteroRec2() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(941216, alg.invertirEnteroRec(612149));
+//	}	
+//	/**
+//	 * Test que comprueba que invertir 8 es 8
+//	 */
+//	@Test
+//	void testInvertirEnteroRec3() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(8, alg.invertirEnteroRec(8));
+//	}	
+//	/**
+//	 * Test que comprueba que invertir 123456789 es 987654321
+//	 */
+//	@Test
+//	void testInvertirEnteroRec4() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(987654321, alg.invertirEnteroRec(123456789));
+//	}
+//	
+///*
+// * Pruebas del metodo invertirStringRec:
+// */
+//	/**
+//	 * Test que comprueba que invertir abc es cba
+//	 */
+//	@Test
+//	void testInvertirStringRec1() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals("cba", alg.invertirStringRec("abc"));
+//	}
+//	/**
+//	 * Test que comprueba que invertir a es a
+//	 */
+//	@Test
+//	void testInvertirStringRec2() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals("a", alg.invertirStringRec("a"));
+//	}
+//	/**
+//	 * Test que comprueba que invertir abcdefg es gfedcba
+//	 */
+//	@Test
+//	void testInvertirStringRec3() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals("gfedcba", alg.invertirStringRec("abcdefg"));
+//	}
+//	/**
+//	 * Test que comprueba que invertir abcdefg es gfedcba
+//	 */
+//	@Test
+//	void testInvertirStringRec4() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals("reconocer", alg.invertirStringRec("reconocer"));
+//	}
+//
+///*
+// * Pruebas del método esSimetrica:
+// */
+//	/**
+//	 * Test que comprueba que la matriz 1x1 es simetrica
+//	 */
+//	@Test
+//	void testEsSimetrica1x1() {		
+//		Algorithms alg= new Algorithms();
+//		assertTrue(alg.esSimetrica(new int[][] {{1}}));
+//	}
+//	/**
+//	 * Test que comprueba que la matriz 2x2 es simetrica
+//	 */
+//	@Test
+//	void testEsSimetrica2x2() {		
+//		Algorithms alg= new Algorithms();
+//		assertTrue(alg.esSimetrica(new int[][] {{1,2},{2,1}}));
+//	}
+//	/**
+//	 * Test que comprueba que la matriz 4x4 no es simetrica
+//	 */
+//	@Test
+//	void testEsSimetrica4x4() {		
+//		Algorithms alg= new Algorithms();
+//		assertFalse(alg.esSimetrica(new int[][] {{1,2,3,4},{5,6,7,8},
+//			{9,10,11,12},{13,14,15,16}}));
+//	}
+//	/**
+//	 * Test que comprueba que la matriz 3x7 no es simetrica
+//	 */
+//	@Test
+//	void testEsSimetrica7x7() {		
+//		Algorithms alg= new Algorithms();
+//		assertFalse(alg.esSimetrica(new int[][] {{1,2,3,4,6,7},{8,9,10,11,12,13,14},
+//			{15,16,17,18,19,20,21}}));
+//	}
+//	
+///**
+// * Pruebas del metodo Pow2It1
+// */
+//	/**
+//	 * Test que comprueba que la potencia iterativa de 2 elevado a 6 es 64
+//	 */
+//	@Test
+//	void testPow2It1() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(64, alg.pow2Iter(6));
+//	}	
+//	/**
+//	 * Test que comprueba que la potencia iterativa de 2 elevado a 10 es 1024
+//	 */
+//	@Test
+//	void testPow2It2() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(1024, alg.pow2Iter(10));
+//	}	
+//	/**
+//	 * Test que comprueba que la potencia iterativa de 2 elevado a 15 es 32768
+//	 */
+//	@Test
+//	void testPow2It3() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(32768, alg.pow2Iter(15));
+//	}
+//	/**
+//	 * Test que comprueba que la potencia iterativa de 2 elevado a 20 es 1048576
+//	 */
+//	@Test
+//	void testPow2It4() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(1048576, alg.pow2Iter(20));
+//	}	
+//	/**
+//	 * Test que comprueba que la potencia iterativa de 2 elevado a 60 es 1152921504606846976
+//	 */
+//	@Test
+//	void testPow2It5() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(1152921504606846976l, alg.pow2Iter(60));
+//	}
+//
+///*
+// * Pruebas del método pow2Rec2:
+// */	
+//	/**
+//	 * Test que comprueba que la potencia recursiva 2 de 2 elevado a 3 es 8
+//	 */
+//	@Test
+//	void testPow2Rec21() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(8, alg.pow2Rec2(3));
+//	}	
+//	/**
+//	 * Test que comprueba que la potencia recursiva 2 de 2 elevado a 6 es 64
+//	 */
+//	@Test
+//	void testPow2Rec22() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(64, alg.pow2Rec2(6));
+//	}
+//	/**
+//	 * Test que comprueba que la potencia recursiva 2 de 2 elevado a 8 es 256
+//	 */
+//	@Test
+//	void testPow2Rec23() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(256, alg.pow2Rec2(8));
+//	}
+//	/**
+//	 * Test que comprueba que la potencia recursiva 2 de 2 elevado a 10 es 1024
+//	 */
+//	@Test
+//	void testPow2Rec24() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(1024, alg.pow2Rec2(10));
+//	}
+//	
+///*
+// * Pruebas del método pow2Rec3:
+// */	
+//	/**
+//	 * Test que comprueba que la potencia recursiva 3 de 2 elevado a 6 es 64
+//	 */
+//	@Test
+//	void testPow2Rec31() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(64, alg.pow2Rec3(6));
+//	}	
+//	/**
+//	 * Test que comprueba que la potencia recursiva 3 de 2 elevado a 20 es 1048576
+//	 */
+//	@Test
+//	void testPow2Rec32() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(1048576, alg.pow2Rec3(20));
+//	}
+//	/**
+//	 * Test que comprueba que la potencia recursiva 3 de 2 elevado a 25 es 33554432
+//	 */
+//	@Test
+//	void testPow2Rec33() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(33554432, alg.pow2Rec3(25));
+//	}
+//	/**
+//	 * Test que comprueba que la potencia recursiva 3 de 2 elevado a 30 es 1073741824
+//	 */
+//	@Test
+//	void testPow2Rec34() {		
+//		Algorithms alg= new Algorithms();
+//		assertEquals(1073741824, alg.pow2Rec3(30));
+//	}
+//	
+/*
+ * Pruebas del método pow2Rec4:
+ */	
+	/**
+	 * Test que comprueba que la potencia recursiva 3 de 2 elevado a 6 es 64
+	 */
+	@Test
+	void testPow2Rec31() {		
+		Algorithms alg= new Algorithms();
+		assertEquals(64, alg.pow2Rec3(6));
+	}	
+	/**
+	 * Test que comprueba que la potencia recursiva 3 de 2 elevado a 20 es 1048576
+	 */
+	@Test
+	void testPow2Rec32() {		
+		Algorithms alg= new Algorithms();
+		assertEquals(4096, alg.pow2Rec3(12));
+	}
+	/**
+	 * Test que comprueba que la potencia recursiva 3 de 2 elevado a 25 es 33554432
+	 */
+	@Test
+	void testPow2Rec33() {		
+		Algorithms alg= new Algorithms();
+		assertEquals(16777216, alg.pow2Rec3(24));
+	}
+	/**
+	 * Test que comprueba que la potencia recursiva 3 de 2 elevado a 30 es 1073741824
+	 */
+	@Test
+	void testPow2Rec34() {		
+		Algorithms alg= new Algorithms();
+		assertEquals(281474976710656l, alg.pow2Rec3(48));
+	}
+}

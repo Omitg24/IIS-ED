@@ -1,0 +1,40 @@
+Empieza la prueba basica de Hash: 
+h=new ClosedHashTable<Integer>(5,ClosedHashTable.LINEAL): 
+Operacion 1 h.addNode(0): 0
+Estado 1-> {0};{_E_};{_E_};{_E_};{_E_};[Size: 5 Num.Elems.: 1]
+Operacion 2 h.addNode(5): 0
+Estado 2-> {0};{5};{_E_};{_E_};{_E_};[Size: 5 Num.Elems.: 2]
+Operacion 3 h.addNode(0): -1
+Estado 3-> {0};{5};{_E_};{_E_};{_E_};[Size: 5 Num.Elems.: 2]
+Operacion 4 h.addNode(10): 0
+Estado 4-> {0};{5};{10};{_E_};{_E_};[Size: 5 Num.Elems.: 3]
+Operacion 5 h.addNode(0): -1
+Estado 5-> {0};{5};{10};{_E_};{_E_};[Size: 5 Num.Elems.: 3]
+Operacion 6 h.addNode(15): 0
+Estado 6-> {0};{5};{10};{15};{_E_};[Size: 5 Num.Elems.: 4]
+Operacion 7 h.find(0): 0
+Estado 7-> {0};{5};{10};{15};{_E_};[Size: 5 Num.Elems.: 4]
+Operacion 8 h.find(10): 10
+Estado 8-> {0};{5};{10};{15};{_E_};[Size: 5 Num.Elems.: 4]
+Operacion 9 h.find(5): 5
+Estado 9-> {0};{5};{10};{15};{_E_};[Size: 5 Num.Elems.: 4]
+Operacion 10 h.find(15): 15
+Estado 10-> {0};{5};{10};{15};{_E_};[Size: 5 Num.Elems.: 4]
+Operacion 11 h.removeNode(0): 0
+Estado 11-> {_D_};{5};{10};{15};{_E_};[Size: 5 Num.Elems.: 3]
+Operacion 12 h.removeNode(10): 0
+Estado 12-> {_D_};{5};{_D_};{15};{_E_};[Size: 5 Num.Elems.: 2]
+Operacion 13 h.removeNode(0): -1
+Estado 13-> {_D_};{5};{_D_};{15};{_E_};[Size: 5 Num.Elems.: 2]
+Operacion 14 h.removeNode(10): -1
+Estado 14-> {_D_};{5};{_D_};{15};{_E_};[Size: 5 Num.Elems.: 2]
+Operacion 15 h.removeNode(0): -1
+Estado 15-> {_D_};{5};{_D_};{15};{_E_};[Size: 5 Num.Elems.: 2]
+Operacion 16 h.removeNode(5): 0
+Estado 16-> {_D_};{_D_};{_D_};{15};{_E_};[Size: 5 Num.Elems.: 1]
+Operacion 17 h.removeNode(0): -1
+Estado 17-> {_D_};{_D_};{_D_};{15};{_E_};[Size: 5 Num.Elems.: 1]
+Operacion 18 h.removeNode(15): 0
+Estado 18-> {_D_};{_D_};{_D_};{_D_};{_E_};[Size: 5 Num.Elems.: 0]
+Termina la prueba basica de Heap.
+

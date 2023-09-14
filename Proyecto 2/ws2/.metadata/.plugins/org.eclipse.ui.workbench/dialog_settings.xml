@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ImportExportAction">
+		<item key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID" value="org.eclipse.ui.wizards.import.ExternalProject"/>
+		<item key="ImportExportPage.STORE_SELECTED_EXPORT_WIZARD_ID" value="org.eclipse.ui.wizards.export.ZipFile"/>
+		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
+		</list>
+		<list key="ImportExportPage.STORE_EXPANDED_EXPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
+		</list>
+	</section>
+	<section name="ZipFileExportWizard">
+		<item key="WizardZipFileResourceExportPage1.STORE_CREATE_STRUCTURE_ID" value="true"/>
+		<item key="WizardZipFileResourceExportPage1.STORE_COMPRESS_CONTENTS_ID" value="true"/>
+		<list key="WizardZipFileResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="E:\Estructuras de Datos\ED-2021-22-TeixeiraGonzálezOmar-UO281847.zip"/>
+			<item value="E:\Estructuras de Datos\ED-2021-22-TeixeiraGonzálezOmar-UO281847 Full.zip"/>
+			<item value="D:\Clase\3. Ingeniería Informática de Software\Segundo curso\Estructuras de Datos\Proyecto 2\ED-2021-22-TeixeiraGonzálezOmar-UO281847.zip"/>
+			<item value="D:\Clase\3. Ingeniería Informática de Software\Segundo curso\Estructuras de Datos\Proyecto 2\ED-2021-22-TeixeiraGonzálezOmar-UO281847 sin algoritmia.zip"/>
+			<item value="D:\Clase\3. Ingeniería Informática de Software\Segundo curso\Estructuras de Datos\ED-2021-22-TeixeiraGonzálezOmar-UO281847.zip"/>
+		</list>
+	</section>
+	<section name="FileSystemExportWizard">
+	</section>
+</section>

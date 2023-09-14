@@ -1,0 +1,25 @@
+package p3Arboles;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class BSTreeExamenTest {
+	/**
+	 * Atributo t
+	 */
+	private BSTreeExamen<Integer> t;	
+	
+	@Test
+	public void addNodeTest() {
+		t = new BSTreeExamen<Integer>(); 
+		assertEquals(0, t.addNode(10));
+		assertEquals(0, t.addNode(4));
+		assertEquals(0, t.addNode(3));
+		assertEquals(0, t.addNode(8));
+		assertEquals(0, t.addNode(12));	
+		assertEquals(0, t.addNode(13));
+		assertEquals(0, t.addNode(11));
+		System.out.println(t.toString());		
+	}
+}

@@ -1,0 +1,343 @@
+package p3Arboles;
+
+import p3Arboles.Pruebas.BSTNodePruebas;
+
+/**
+ * Titulo: Clase BSTree 
+ * 
+ * @author UO281847
+ * @version 05/11/2021
+ */
+public class BSTreeExamen <T extends Comparable<T>>{
+	/**
+	 * Atributo raiz
+	 */
+	private BSTNode<T> raiz;	
+	/**
+	 * getter del nodo raiz del arbol
+	 * 
+	 * @return raiz, raiz del nodo
+	 */
+	protected BSTNode<T> getRoot() {
+		return raiz;
+	}	
+	/**
+	 * setter del nodo raiz del arbol
+	 * 
+	 * @param raiz, raiz del nodo
+	 */
+	protected void setRoot(BSTNode<T> raiz) {
+		this.raiz = raiz;
+	}	
+	/**
+	 * Se le pasa el objeto comparable que hay que insertar
+	 *
+	 * Si lo inserta devolveria 0, y un codigo de error negativo
+	 * si no lo hace
+	 * (-1 si ya existe, -2 otra causa)
+	 * 
+	 * @param info, info del nodo
+	 * @return 0, -1 o -2
+	 */
+	public int addNode(T info) {
+		try {			
+			if (info!=null) {				
+				setRoot(recursiveAddNode(info, raiz));
+				return 0;				
+			}
+			return -2;
+		} catch (RuntimeException e) {
+			return -1;
+		}
+	}	
+	/**
+	 * Método recursivo de añadir Nodo
+	 * 
+	 * @param info, info del nodo
+	 * @param raiz, raiz del nodo
+	 * @return BSTNode, nodo a añadir
+	 */
+	private BSTNode<T> recursiveAddNode(T info, BSTNode<T> raiz) {
+		if (raiz==null) {
+			return new BSTNode<T>(info);
+		} else if (info.equals(raiz.getInfo())) {
+			throw new RuntimeException("El nodo ya existe");			
+		} else if (info.compareTo(raiz.getInfo()) < 0 ) {
+			raiz.setLeft(recursiveAddNode(info, raiz.getLeft()));
+		} else if (info.compareTo(raiz.getInfo()) > 0 ) {
+			raiz.setRight(recursiveAddNode(info, raiz.getRight()));
+		} 
+		return raiz;	
+	}	
+	/**
+	* Se le pasa un objeto comparable que se busca
+	* Devuelve el objeto encontrado que cumple que es "equals" con el
+	* buscado, null si no lo encuentra por cualquier motivo
+	* 
+	* @param info, info del nodo
+	* @return info, info del nodo
+	*/
+	public T searchNode(T info) {
+		if (info==null) {
+			return null;
+		}		
+		return recursiveSearch(info, raiz);
+	}
+	/**
+	 * Método recursivo de busqueda del nodo
+	 * 
+	 * @param info, info del nodo
+	 * @param raiz, raiz del nodo
+	 * @return true o false
+	 */
+	private T recursiveSearch(T info, BSTNode<T> raiz) {
+		if (raiz == null) {
+			return null;
+		}
+		if (raiz.getInfo().equals(info)) {
+			return raiz.getInfo();
+		}		
+		if (raiz.getInfo().compareTo(info) > 0) {
+			return recursiveSearch(info, raiz.getLeft());
+		} else {
+			return recursiveSearch(info, raiz.getRight());
+		}
+	}	
+	/**
+	 * Genera un String con el recorrido en pre-orden (izquierda-derecha)
+	 * (toString de los nodos separados por tabuladores)
+	 * 
+	 * @return path, cadena del recorrido
+	 */
+	public String preOrder() {
+		String path = "";
+		return recursivePreOrder(raiz, path);
+	}
+	/**
+	 * Método recursivo que genera el recorrido preOrder
+	 * 
+	 * @param raiz, raiz del nodo
+	 * @param result, cadena del recorrido
+	 * @return result, recorrido
+	 */
+	private String recursivePreOrder(BSTNode<T> raiz, String result) {
+		if (raiz==null) {
+			return "";
+		}
+		result = raiz.toString() + "\t" + recursivePreOrder(raiz.getLeft(), result) 
+		+ recursivePreOrder(raiz.getRight(), result);
+		return result;
+	}	
+	/**
+	 * Genera un String con el recorrido en post-orden (izquierda-derecha)
+	 * (toString de los nodos separados por tabuladores)
+	 * 
+	 * @return path, cadena del recorrido
+	 */
+	public String postOrder() {
+		String path = "";
+		return recursivePostOrder(raiz, path);
+	}
+	/**
+	 * Método recursivo que genera el recorrido postOrder
+	 * 
+	 * @param raiz, raiz del nodo
+	 * @param result, cadena del recorrido
+	 * @return result, recorrido
+	 */
+	private String recursivePostOrder(BSTNode<T> raiz, String result) {
+		if (raiz==null) {
+			return "";
+		}		
+		result = recursivePostOrder(raiz.getLeft(), result)
+		+ recursivePostOrder(raiz.getRight(), result) + raiz.toString() + "\t";
+		return result;
+	}
+	/**
+	 * Genera un String con el recorrido en in-orden (izquierda-derecha)
+	 * (toString de los nodos separados por tabuladores)
+	 * 
+	 * @return path, cadena del recorrido
+	 */
+	public String inOrder() {
+		String path = "";
+		return recursiveInOrder(raiz, path);
+	}
+	/**
+	 * Método recursivo que genera el recorrido inOrder
+	 * 
+	 * @param raiz, raiz del nodo
+	 * @param result, cadena del recorrido
+	 * @return result, recorrido
+	 */
+	private String recursiveInOrder(BSTNode<T> raiz, String result) {		
+		if (raiz==null) {
+			return "";
+		}
+		result = recursiveInOrder(raiz.getLeft(), result) + raiz.toString() + "\t" 
+		+ recursiveInOrder(raiz.getRight(), result);
+		return result;
+	}	
+	/**
+	* Se le pasa el objeto que se quiere borrar que coincida con equals
+	* Devuelve 0 si lo ha borrado, negativo en caso contrario
+	*  (-1 si no existe, -2 otra causa)
+	*  
+	* @param info, info del nodo 
+	* @return 0, -1 o -2
+	*/
+	public int removeNode (T info){
+		try {			
+			if (info!=null) {				
+				setRoot(recursiveRemoveNode(info, raiz));
+				return 0;				
+			}
+			return -2;
+		} catch (RuntimeException e) {
+			return -1;
+		}
+	}
+	/**
+	 * Método recursivo de eliminar el nodo
+	 * 
+	 * @param info, info del nodo
+	 * @param raiz, raiz del nodo
+	 * @return nodo a eliminar
+	 */
+	private BSTNode<T> recursiveRemoveNode(T info, BSTNode<T> raiz) {
+		if (raiz==null) {
+			throw new RuntimeException("El nodo no existe");
+		} else if (info.compareTo(raiz.getInfo()) < 0 ) {
+			raiz.setLeft(recursiveRemoveNode(info, raiz.getLeft()));
+		} else if (info.compareTo(raiz.getInfo()) > 0 ) {
+			raiz.setRight(recursiveRemoveNode(info, raiz.getRight()));
+		} else if (info.compareTo(raiz.getInfo()) == 0 ) {
+			if (raiz.getLeft()==null) {
+				return raiz.getRight();
+			} else if (raiz.getRight()==null) {
+				return raiz.getLeft();
+			}
+			raiz.setInfo(maxNode(raiz.getLeft()));
+			raiz.setLeft(recursiveRemoveNode(raiz.getInfo(), raiz.getLeft()));			
+		}
+		return raiz;	
+	}
+	/**
+	 * Método que devuelve el nodo máximo de la raiz indicada
+	 * 
+	 * @param raiz, raiz del nodo
+	 * @return nodo máximo
+	 */
+	protected T maxNode(BSTNode<T> raiz) {
+		if (raiz==null) {
+			return null;
+		}
+		return recursiveMaxNode(raiz);
+	}
+	/**
+	 * Método recursivo del nodo máximo
+	 * 
+	 * @param raiz, raiz del nodo
+	 * @return nodo máximo
+	 */
+	private T recursiveMaxNode(BSTNode<T> raiz) {
+		if (raiz.getRight() == null) {
+			return raiz.getInfo();
+		}
+		return recursiveMaxNode(raiz.getRight());
+	}
+	/**
+	 * Método que devuelve el arbol
+	 * 
+	 * @return arbol
+	 */
+	public String toString() {
+		return tumbarArbol(raiz, 0);
+	}		
+	/**
+	 * Genera un String con el arbol "tumbado" (la raiz a la izquierda y las ramas hacia la derecha)
+	 * Es un recorrido InOrden-Derecha-Izquierda, tabulando para mostrar los distintos niveles
+	 * Utiliza el toString de la informacion almacenada
+	 *
+	 * @param p La raiz del arbol a mostrar tumbado
+	 * @param esp El espaciado en numero de tabulaciones para indicar la profundidad
+	 * @return El String generado
+	 */
+	protected String tumbarArbol(BSTNode<T> p, int esp) {
+	StringBuilder cadena = new StringBuilder();
+	
+		if (p != null) {
+			cadena.append(tumbarArbol(p.getRight(), esp + 1));
+			for (int i = 0; i < esp; i++)
+				cadena.append("\t");
+			cadena.append(p + "\n");
+			cadena.append(tumbarArbol(p.getLeft(), esp + 1));
+		}
+		return cadena.toString();
+	}
+	
+	/**
+	 * Metodo que calcula el numero de nodos de un subarbol, al que se le pasa la raiz como parametro
+	 * 
+	 * @param raiz, raiz del subarbol
+	 * @return
+	 */
+	public int numNodes(BSTNode<T> raiz) {
+		if (getRoot()==null || raiz==null) {
+			return 0;
+		}
+		return 1 + numNodes(raiz.getLeft()) + numNodes(raiz.getRight());
+	}
+	
+//	/**
+//	 * Método recursivo (no usado) para calcular el numero de nodos
+//	 * 
+//	 * @return numNodos
+//	 */
+//	private int recursiveNumNodes(BSTNode<T> raiz) {
+//		if (raiz==null) {
+//			return 0;
+//		}
+//		return 1 + recursiveNumNodes(raiz.getLeft()) + recursiveNumNodes(raiz.getRight());
+//	}
+	
+	/**
+	 * Método que devuelve si un arbol es perfectamente balanceado
+	 * 
+	 * @return true o false
+	 */
+	public boolean isPerfectlyBalanced() {
+		int numNodesIzda = numNodes(raiz.getLeft()); 
+		int numNodesDcha = numNodes(raiz.getRight());
+		
+		return (Math.abs(numNodesIzda - numNodesDcha) <= 1);		
+	}
+	
+	public BSTNode<T> findNode(T info) {
+		if (info==null) {
+			return null;
+		}		
+		return recursiveFind(info, raiz);
+	}
+	
+	/**
+	 * Método recursivo de busqueda del nodo
+	 * 
+	 * @param info, info del nodo
+	 * @param raiz, raiz del nodo
+	 * @return true o false
+	 */
+	private BSTNode<T> recursiveFind(T info, BSTNode<T> raiz) {
+		if (raiz == null) {
+			return null;
+		}
+		if (raiz.getInfo().equals(info)) {
+			return raiz;
+		}		
+		if (raiz.getInfo().compareTo(info) > 0) {
+			return recursiveFind(info, raiz.getLeft());
+		} else {
+			return recursiveFind(info, raiz.getRight());
+		}
+	}	
+}

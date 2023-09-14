@@ -1,0 +1,225 @@
+package p3Arboles;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+/**
+ * Titulo: Clase EDBinaryHeapTest
+ * 
+ * @author UO281847
+ * @version 19/11/2011
+ */
+class EDBinaryHeapTest {
+	/**
+	 * Atributo m
+	 */
+	private EDBinaryHeap<Integer> m;
+
+/*
+ * Pruebas de métodos generales 
+ */
+	/**
+	 * Prueba del método add
+	 */
+	@Test
+	public void addTest() {
+		m = new EDBinaryHeap<Integer>(10);
+		assertEquals(0, m.add(5));
+		assertEquals(0, m.add(3));
+		assertEquals(0, m.add(2));
+		assertEquals(-2, m.add(null));
+		assertEquals(0, m.add(6));
+		assertEquals(0, m.add(4));
+		assertEquals(0, m.add(7));
+		assertEquals(-2, m.add(null));
+		assertEquals(0, m.add(1));
+		assertEquals(-2, m.add(null));
+		assertEquals(0, m.add(10));
+		assertEquals(0, m.add(9));
+		assertEquals(0, m.add(9));
+		assertEquals(-3, m.add(null));
+		System.out.println(m.toString());
+	}
+
+	/**
+	 * Prueba del método poll
+	 */
+	@Test
+	public void pollTest() {
+		m = new EDBinaryHeap<Integer>(10);
+		assertNull(m.poll());
+		assertEquals(0, m.add(5));
+		assertEquals(0, m.add(3));
+		assertEquals(0, m.add(2));		
+		assertEquals(0, m.add(6));
+		assertEquals(0, m.add(4));
+		assertEquals(0, m.add(7));		
+		assertEquals(0, m.add(1));		
+		assertEquals(0, m.add(10));		
+		assertEquals(0, m.add(9));
+		assertEquals(0, m.add(9));		
+		assertEquals(1, m.poll());		
+		assertEquals(2, m.poll());
+		assertEquals(3, m.poll());		
+		assertEquals(4, m.poll());		
+		assertEquals(5, m.poll());
+		System.out.println(m.toString());
+		assertEquals(6, m.poll());
+//		assertEquals(7, m.poll());		
+//		assertEquals(9, m.poll());
+//		assertEquals(9, m.poll());
+//		assertEquals(10, m.poll());
+//		assertNull(m.poll());
+		System.out.println(m.toString());
+	}
+	
+	/**
+	 * Prueba del método remove
+	 */
+	@Test
+	public void removeTest() {
+		m = new EDBinaryHeap<Integer>(10);
+		assertEquals(-1, m.remove(5));
+		assertEquals(0, m.add(5));
+		assertEquals(0, m.add(3));
+		assertEquals(0, m.add(2));
+		assertEquals(-2, m.remove(null));
+		assertEquals(0, m.add(6));
+		assertEquals(0, m.add(4));
+		assertEquals(0, m.add(7));		
+		assertEquals(0, m.add(1));		
+		assertEquals(0, m.add(10));		
+		assertEquals(0, m.add(9));
+		assertEquals(0, m.add(9));
+		assertEquals(-2, m.remove(null));
+		assertEquals(0, m.remove(9));
+		assertEquals(0, m.remove(1));
+		assertEquals(0, m.remove(4));
+		assertEquals(-1, m.remove(4));
+		assertEquals(-1, m.remove(4));
+		assertEquals(0, m.remove(3));
+		assertEquals(-1, m.remove(3));
+		assertEquals(0, m.remove(2));
+		assertEquals(-2, m.remove(null));
+		System.out.println(m.toString());
+	}
+	
+	/**
+	 * Prueba de evolución de montículos
+	 */
+	@Test
+	public void evolutionTest() {
+		m = new EDBinaryHeap<Integer>(10);
+		assertNull(m.poll());
+		assertEquals(-1, m.remove(10));
+		assertEquals(-2, m.add(null));
+		assertNull(m.poll());
+		assertEquals(0, m.add(10));
+		m.clear();
+		assertNull(m.poll());
+		assertEquals(-1, m.remove(10));
+		assertEquals(-2, m.add(null));
+		assertEquals(0, m.add(10));
+		assertEquals(10, m.poll());
+		assertEquals(0, m.add(10));
+		assertEquals(0, m.add(9));
+		assertEquals(-2, m.add(null));
+		assertEquals(0, m.remove(9));
+		assertEquals(-1, m.remove(9));
+		assertEquals(-1, m.remove(9));
+		assertEquals(-1, m.remove(100));
+		assertEquals(0, m.add(9));	
+		assertEquals(0, m.add(8));
+		assertEquals(-1, m.remove(1));
+		assertEquals(0, m.add(14));
+		assertEquals(0, m.add(8));
+		assertEquals(0, m.remove(8));
+		assertEquals(0, m.remove(8));
+		assertEquals(-1, m.remove(8));
+		assertEquals(9, m.poll());
+		assertEquals(-2, m.add(null));
+		assertEquals(-2, m.remove(null));
+		assertEquals(0, m.add(8));
+		assertEquals(0, m.add(1));
+		assertEquals(0, m.add(2));
+		assertEquals(0, m.add(7));
+		assertEquals(1, m.poll());
+		m.clear();
+		assertNull(m.poll());
+		assertEquals(-1, m.remove(2));
+		assertEquals(-1, m.remove(7));
+		assertEquals(-1, m.remove(8));
+		assertEquals(-1, m.remove(14));
+		assertEquals(-1, m.remove(10));
+		m.clear();
+		assertEquals(0, m.add(4));
+		assertEquals(0, m.add(6));
+		assertEquals(0, m.remove(4));
+		assertEquals(0, m.add(10));
+		assertEquals(0, m.add(6));
+		assertEquals(0, m.remove(6));
+		assertEquals(0, m.remove(6));
+		assertEquals(0, m.add(6));
+		assertEquals(0, m.add(8));
+		assertEquals(0, m.add(11));
+		assertEquals(0, m.add(1));
+		assertEquals(0, m.add(3));
+		assertEquals(-2, m.add(null));
+		assertEquals(0, m.add(4));
+		assertEquals(0, m.remove(4));
+		assertEquals(-1, m.remove(4));
+		assertEquals(1, m.poll());
+		assertEquals(0, m.add(4));
+		assertEquals(0, m.add(1));
+		assertEquals(0, m.add(-6));
+		assertEquals(-6, m.poll());
+		assertEquals(1, m.poll());
+		assertEquals(3, m.poll());
+		assertEquals(0, m.add(1));
+		assertEquals(0, m.remove(1));
+		assertEquals(-1, m.remove(1));
+		assertEquals(-2, m.remove(null));
+		m.clear();
+		assertEquals(0, m.add(1));
+		assertEquals(0, m.add(2));
+		assertEquals(0, m.add(10));
+		assertEquals(0, m.add(6));
+		assertEquals(0, m.add(8));
+		assertEquals(0, m.add(9));
+		assertEquals(0, m.remove(1));
+		assertEquals(0, m.add(1));
+		assertEquals(1, m.poll());
+		assertEquals(-2, m.add(null));
+		assertEquals(0, m.add(5));
+		assertEquals(0, m.add(4));
+		assertEquals(0, m.add(3));
+		assertEquals(0, m.add(65));
+		assertEquals(0, m.add(100));
+		assertEquals(-1, m.add(1));
+		assertEquals(-3, m.add(null));
+		assertEquals(2, m.poll());
+		assertEquals(-1, m.remove(2));
+		assertEquals(0, m.add(1));
+		assertEquals(-1, m.add(1));
+		assertEquals(-3, m.add(null));
+		m.clear();
+		assertNull(m.poll());
+		assertEquals(0, m.add(100));
+		assertEquals(0, m.add(200));
+		assertEquals(0, m.add(300));
+		assertEquals(0, m.add(400));
+		assertEquals(0, m.add(500));
+		assertEquals(0, m.add(600));
+		assertEquals(0, m.add(700));
+		assertEquals(0, m.add(800));
+		assertEquals(0, m.add(900));
+		assertEquals(0, m.add(1000));
+		assertEquals(-1, m.add(1));
+		assertEquals(0, m.remove(400));
+		assertEquals(0, m.add(1));
+		assertEquals(1, m.poll());
+//		assertEquals(0, m.add(400));
+		System.out.println(m.toString());
+	}
+}

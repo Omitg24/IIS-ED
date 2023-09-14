@@ -1,0 +1,154 @@
+Empieza la prueba basica de Heap: 
+g=new EDBinaryHeap<Integer>(10): 
+1 g.addNode(10): 0
+10
+
+2 g.addNode(9): 0
+9
+	10
+
+3 g.addNode(8): 0
+	9
+8
+	10
+
+4 g.addNode(7): 0
+	9
+7
+	8
+		10
+
+5 g.addNode(6): 0
+	9
+6
+		8
+	7
+		10
+
+6 g.addNode(5): 0
+	6
+		9
+5
+		8
+	7
+		10
+
+7 g.addNode(4): 0
+		6
+	5
+		9
+4
+		8
+	7
+		10
+
+8 g.addNode(3): 0
+		6
+	5
+		9
+3
+		8
+	4
+		7
+			10
+
+9 g.addNode(2): 0
+		6
+	5
+		9
+2
+		8
+	3
+			7
+		4
+			10
+
+10 g.addNode(1): 0
+		6
+	5
+		9
+1
+		3
+			8
+	2
+			7
+		4
+			10
+
+11 g.poll(): 1
+
+		6
+	5
+		9
+2
+		8
+	3
+			7
+		4
+			10
+
+12 g.poll(): 2
+
+		6
+	5
+		9
+3
+		8
+	4
+		7
+			10
+
+13 g.poll(): 3
+
+		6
+	5
+		9
+4
+		8
+	7
+		10
+
+14 g.poll(): 4
+
+	6
+		9
+5
+		8
+	7
+		10
+
+15 g.poll(): 5
+
+	9
+6
+		8
+	7
+		10
+
+16 g.poll(): 6
+
+	9
+7
+	8
+		10
+
+17 g.poll(): 7
+
+	9
+8
+	10
+
+18 g.poll(): 8
+
+9
+	10
+
+19 g.poll(): 9
+
+10
+
+20 g.poll(): 10
+
+
+Termina la prueba basica de Heap.
+
